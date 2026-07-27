@@ -1,0 +1,86 @@
+<div class="app-container">
+  <!-- Navbar Header -->
+  <header class="navbar-header">
+    <div class="navbar-wrapper">
+      <div class="logo" routerLink="/">
+        Glow<span>Loom</span>
+      </div>
+
+      <!-- Desktop Nav -->
+      <nav class="desktop-nav">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a routerLink="/about" routerLinkActive="active">About Us</a>
+        <a routerLink="/projects" routerLinkActive="active">Our Projects</a>
+        <a routerLink="/contact" routerLinkActive="active">Contact Page</a>
+      </nav>
+
+      <!-- Utilities -->
+      <div class="nav-utils">
+        <!-- Theme Toggle -->
+        <button class="icon-btn" (click)="toggleTheme()" aria-label="Toggle Theme">
+          <span *ngIf="!isDarkMode">🌙</span>
+          <span *ngIf="isDarkMode">☀️</span>
+        </button>
+
+        <!-- WhatsApp Integration -->
+        <a [href]="whatsappLink" target="_blank" class="whatsapp-btn">
+          <svg style="width:20px;height:20px;fill:currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.625 1.451 5.436.002 9.851-4.405 9.854-9.842.001-2.634-1.024-5.11-2.885-6.974C16.38 1.953 13.9 .93 11.278.93 5.845.93 1.429 5.336 1.426 10.774c-.001 1.562.415 3.09 1.202 4.47l-.992 3.628 3.72-.977c1.37.747 2.802 1.139 4.291 1.139zm11.302-7.7c-.287-.143-1.698-.838-1.96-.933-.263-.097-.455-.145-.647.143-.19.288-.741.933-.909 1.124-.168.19-.336.213-.623.069-.29-.143-1.223-.45-2.33-1.439-.86-.767-1.44-1.716-1.61-2.001-.168-.287-.018-.442.126-.583.13-.127.288-.336.432-.504.143-.168.19-.288.288-.48.096-.19.048-.36-.024-.503-.072-.143-.647-1.56-.887-2.136-.233-.56-.47-.484-.647-.492-.167-.008-.36-.01-.55-.01-.19 0-.503.071-.767.36-.263.287-1.006.983-1.006 2.396 0 1.413 1.03 2.784 1.173 2.976.143.19 2.026 3.094 4.909 4.337.685.296 1.22.473 1.637.605.689.219 1.317.189 1.813.114.553-.083 1.698-.694 1.937-1.365.239-.67.239-1.245.168-1.365-.072-.12-.263-.19-.55-.333z"/></svg>
+          Connect on WhatsApp
+        </a>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="mobile-toggle icon-btn" (click)="toggleMobileMenu()" aria-label="Menu">
+          <span style="font-size: 24px;">☰</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Dropdown Menu -->
+  <div class="mobile-nav" [class.open]="isMobileMenuOpen">
+    <div class="mobile-nav-header">
+      <div class="logo">Glow<span>Loom</span></div>
+      <button class="icon-btn" (click)="toggleMobileMenu()">✕</button>
+    </div>
+    <div class="mobile-links">
+      <a routerLink="/" (click)="closeMobileMenu()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a routerLink="/about" (click)="closeMobileMenu()" routerLinkActive="active">About Us</a>
+      <a routerLink="/projects" (click)="closeMobileMenu()" routerLinkActive="active">Our Projects</a>
+      <a routerLink="/contact" (click)="closeMobileMenu()" routerLinkActive="active">Contact Page</a>
+      <a [href]="whatsappLink" target="_blank" class="whatsapp-mob">
+        Connect on WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- Router Content Area -->
+  <main class="content-body">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-grid">
+      <div class="footer-info">
+        <h3>Glow<span>Loom</span></h3>
+        <p>Creating premium web designs and customized database architectures to grow your digital brand presence.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navigation</h4>
+        <a routerLink="/">Home</a>
+        <a routerLink="/about">About Us</a>
+        <a routerLink="/projects">Our Projects</a>
+        <a routerLink="/contact">Contact Page</a>
+      </div>
+      <div class="footer-contact">
+        <h4>Office Details</h4>
+        <p>📍 128 Creative Loom Ave, Suite 300</p>
+        <p>✉️ info&#64;glowloom.com</p>
+        <p>📞 +1 (555) 982-1209</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Glow Loom Agency. All rights reserved.
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,91 @@
+<div class="projects-container animate-fade">
+  <section class="projects-header">
+    <h1>Our Projects</h1>
+    <p>A directory of our projects pulled directly from the backend database.</p>
+  </section>
+
+  <!-- Filter Navigation bar -->
+  <div class="filter-bar">
+    <button 
+      *ngFor="let cat of categories" 
+      (click)="filterCategory(cat)"
+      [class.active]="selectedCategory === cat"
+      class="filter-chip">
+      {{ cat }}
+    </button>
+  </div>
+
+  <!-- Loading & Error States -->
+  <div *ngIf="loading" class="loading-state">
+    Fetching project records...
+  </div>
+  <div *ngIf="error" class="error-state">
+    {{ error }}
+  </div>
+
+  <!-- Grid Display -->
+  <div *ngIf="!loading && !error" class="projects-grid">
+    <div 
+      *ngFor="let project of filteredProjects" 
+      class="project-card"
+      (click)="openLightbox(project)">
+      
+      <div class="card-media">
+        <!-- Render first image of reference JSON array -->
+        <img [src]="project.reference_images_for_image[0]" [alt]="project.project_name" />
+        <div class="hover-overlay">
+          <span>🔍 View Project Details</span>
+        </div>
+      </div>
+      
+      <div class="card-details">
+        <h3>{{ project.project_name }}</h3>
+        <p>{{ project.project_description | slice:0:110 }}...</p>
+        <div class="tech-tags">
+          <span *ngFor="let tech of project.technologies_used.split(',')">
+            {{ tech.trim() }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox Modal popup -->
+  <div class="lightbox-modal" *ngIf="selectedProject" (click)="closeLightbox()">
+    <div class="lightbox-content" (click)="$event.stopPropagation()">
+      <button class="close-btn" (click)="closeLightbox()">✕</button>
+      
+      <div class="lightbox-gallery">
+        <img [src]="selectedProject.reference_images_for_image[activeImageIndex]" [alt]="selectedProject.project_name" />
+        
+        <!-- Carousels Controls if more than one image exists -->
+        <div class="nav-arrows" *ngIf="selectedProject.reference_images_for_image.length > 1">
+          <button (click)="prevImage($event)">◀</button>
+          <button (click)="nextImage($event)">▶</button>
+        </div>
+        
+        <!-- Carousel Dots indicator -->
+        <div class="gallery-dots" *ngIf="selectedProject.reference_images_for_image.length > 1">
+          <span 
+            *ngFor="let img of selectedProject.reference_images_for_image; let idx = index"
+            [class.active]="activeImageIndex === idx">
+          </span>
+        </div>
+      </div>
+
+      <div class="lightbox-info">
+        <h2>{{ selectedProject.project_name }}</h2>
+        <p class="desc">{{ selectedProject.project_description }}</p>
+        
+        <div class="info-block">
+          <strong>Technologies:</strong>
+          <div class="tech-tags">
+            <span *ngFor="let tech of selectedProject.technologies_used.split(',')">
+              {{ tech.trim() }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

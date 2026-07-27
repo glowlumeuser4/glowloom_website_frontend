@@ -1,0 +1,122 @@
+<div class="contact-container animate-fade">
+  <div class="contact-layout">
+    <!-- Left column: Company info -->
+    <div class="contact-details">
+      <h2>Let's Get in Touch</h2>
+      <p>Have a question or want to start a project? Fill out the form and a representative from Glow Loom will reach out to you within 24 hours.</p>
+
+      <div class="info-list">
+        <div class="info-item">
+          <span class="icon">📍</span>
+          <div>
+            <h4>Headquarters</h4>
+            <p>128 Creative Loom Ave, Suite 300</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <span class="icon">✉️</span>
+          <div>
+            <h4>Email Inquiry</h4>
+            <p>info&#64;glowloom.com</p>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <span class="icon">📞</span>
+          <div>
+            <h4>Contact Number</h4>
+            <p>+1 (555) 982-1209</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right column: Interactive form -->
+    <div class="contact-form-card">
+      <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)" novalidate>
+        
+        <!-- Inline Alert Statuses -->
+        <div class="alert alert-success" *ngIf="successMessage">
+          {{ successMessage }}
+        </div>
+        <div class="alert alert-danger" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name *</label>
+            <input 
+              type="text" 
+              id="firstName" 
+              name="firstName"
+              required 
+              [(ngModel)]="formData.user_first_name" 
+              #firstName="ngModel"
+              [class.error-input]="firstName.invalid && firstName.touched"
+              placeholder="First name" />
+          </div>
+
+          <div class="form-group">
+            <label for="lastName">Last Name *</label>
+            <input 
+              type="text" 
+              id="lastName" 
+              name="lastName"
+              required 
+              [(ngModel)]="formData.user_last_name" 
+              #lastName="ngModel"
+              [class.error-input]="lastName.invalid && lastName.touched"
+              placeholder="Last name" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address *</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email"
+            required 
+            email
+            [(ngModel)]="formData.user_email_id" 
+            #email="ngModel"
+            [class.error-input]="email.invalid && email.touched"
+            placeholder="example&#64;domain.com" />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input 
+            type="tel" 
+            id="phone" 
+            name="phone"
+            required 
+            [(ngModel)]="formData.user_contact_number" 
+            #phone="ngModel"
+            [class.error-input]="phone.invalid && phone.touched"
+            placeholder="10-digit number" />
+        </div>
+
+        <div class="form-group">
+          <label for="purpose">Purpose of Contact (Optional)</label>
+          <textarea 
+            id="purpose" 
+            name="purpose"
+            rows="4" 
+            [(ngModel)]="formData.purpouse_of_contact"
+            placeholder="Briefly describe your requirements..."></textarea>
+        </div>
+
+        <button 
+          type="submit" 
+          [disabled]="contactForm.invalid || submitting"
+          class="submit-btn">
+          <span *ngIf="!submitting">Submit Inquiry</span>
+          <span *ngIf="submitting">Sending Message...</span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
