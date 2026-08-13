@@ -36,7 +36,7 @@ export class ContactComponent {
 
     this.apiService.submitContact(this.formData).subscribe({
       next: (res) => {
-        this.successMessage = 'Your inquiry has been successfully sent to Glow Loom!';
+        this.successMessage = 'Your inquiry has been successfully sent to CHANDHU Technologies!';
         this.submitting = false;
         form.resetForm();
         this.formData = {

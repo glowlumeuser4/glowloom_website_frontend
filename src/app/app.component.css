@@ -1,10 +1,24 @@
+.global-3d-bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.85;
+}
+
 .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-/* Header & Glassmorphism Navigation */
+/* ===========================
+   HEADER
+=========================== */
+
 .navbar-header {
   position: sticky;
   top: 0;
@@ -25,12 +39,43 @@
   justify-content: space-between;
 }
 
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.brand-logo-img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.brand-container:hover .brand-logo-img {
+  transform: scale(1.08);
+}
+
+.brand-title {
+  font-family: "Outfit", sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.5px;
+  color: var(--text-primary);
+}
+
+.brand-title span {
+  color: var(--primary);
+}
+
 .logo {
-  font-family: 'Outfit', sans-serif;
+  font-family: "Outfit", sans-serif;
   font-size: 24px;
   font-weight: 800;
   cursor: pointer;
-  letter-spacing: -0.5px;
+  letter-spacing: -.5px;
   color: var(--text-primary);
 }
 
@@ -44,29 +89,31 @@
 }
 
 .desktop-nav a {
-  font-weight: 500;
-  color: var(--text-secondary);
   position: relative;
   padding: 6px 0;
   font-size: 15px;
+  font-weight: 500;
+  color: var(--text-secondary);
 }
 
 .desktop-nav a::after {
-  content: '';
+  content: "";
   position: absolute;
-  bottom: 0;
   left: 0;
+  bottom: 0;
   width: 0;
   height: 2px;
-  background-color: var(--primary);
-  transition: width 0.3s ease;
+  background: var(--primary);
+  transition: .3s;
 }
 
-.desktop-nav a.active, .desktop-nav a:hover {
+.desktop-nav a:hover,
+.desktop-nav a.active {
   color: var(--primary);
 }
 
-.desktop-nav a.active::after, .desktop-nav a:hover::after {
+.desktop-nav a:hover::after,
+.desktop-nav a.active::after {
   width: 100%;
 }
 
@@ -77,33 +124,34 @@
 }
 
 .icon-btn {
-  background: none;
+  background: var(--input-bg);
   border: none;
-  font-size: 18px;
-  cursor: pointer;
-  padding: 8px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background-color: var(--input-bg);
+  cursor: pointer;
+
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .whatsapp-btn {
-  background-color: var(--whatsapp);
+  background: var(--whatsapp);
   color: white;
-  padding: 8px 16px;
+  padding: 9px 18px;
   border-radius: 30px;
   font-size: 14px;
   font-weight: 600;
+
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: transform 0.2s, background-color 0.2s;
+
+  transition: .3s;
 }
 
 .whatsapp-btn:hover {
-  background-color: #1ebd59;
   transform: translateY(-2px);
 }
 
@@ -111,20 +159,27 @@
   display: none;
 }
 
-/* Mobile Nav Modal Drawer */
+/* ===========================
+   MOBILE MENU
+=========================== */
+
 .mobile-nav {
   position: fixed;
   top: 0;
   right: -100%;
   width: 300px;
   height: 100vh;
-  background-color: var(--bg-secondary);
+
+  background: var(--bg-secondary);
+
+  transition: .4s;
+
+  padding: 24px;
+
   z-index: 200;
-  box-shadow: -5px 0 30px rgba(0,0,0,0.15);
+
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  transition: right 0.4s cubic-bezier(0.85, 0, 0.15, 1);
 }
 
 .mobile-nav.open {
@@ -135,6 +190,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   margin-bottom: 40px;
 }
 
@@ -145,9 +201,9 @@
 }
 
 .mobile-links a {
+  color: var(--text-secondary);
   font-size: 18px;
   font-weight: 600;
-  color: var(--text-secondary);
 }
 
 .mobile-links a.active {
@@ -155,93 +211,220 @@
 }
 
 .whatsapp-mob {
-  background-color: var(--whatsapp);
+  margin-top: 20px;
+  background: var(--whatsapp);
   color: white;
+  text-align: center;
   padding: 12px;
   border-radius: 8px;
-  text-align: center;
-  font-weight: 600;
-  margin-top: 20px;
 }
 
-/* Content Body */
+/* ===========================
+   CONTENT
+=========================== */
+
 .content-body {
-  flex-grow: 1;
-  min-height: calc(100vh - 140px);
+  flex: 1;
 }
 
-/* Footer styles */
+.nav-utils {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Minimalist Circle Theme Toggle Button */
+.theme-circle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+}
+
+.circle-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10b981; /* Emerald Green in white/light mode */
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+  transition: all 0.3s ease;
+}
+
+/* In Dark Mode, circle dot turns Clean White */
+.theme-circle-btn.dark-mode-active .circle-dot {
+  background: #ffffff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.theme-circle-btn:hover {
+  transform: scale(1.1);
+  border-color: var(--primary);
+}
+
+/* Header Three Dots Tooltip Wrapper */
+.header-dots-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.header-dots-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.header-dots-btn:hover {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  transform: rotate(90deg) scale(1.1);
+}
+
+/* Popover Tooltip on Hover */
+.dots-tooltip-popover {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background: var(--bg-card-solid);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5px);
+  transition: all 0.25s ease;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.header-dots-wrapper:hover .dots-tooltip-popover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ===========================
+   FOOTER (Ultra Compact 2-Column)
+=========================== */
+
 .app-footer {
-  background-color: var(--bg-secondary);
-  border-top: 1px solid var(--border);
-  padding: 50px 24px 30px;
-  margin-top: auto;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    padding: 20px 24px 12px;
+    margin-top: auto;
 }
 
 .footer-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1.5fr;
-  gap: 40px;
-  margin-bottom: 40px;
+    max-width: 1050px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 12px;
 }
 
-.footer-info h3 {
-  font-size: 22px;
-  margin-bottom: 15px;
+.footer-info {
+    display: flex;
+    align-items: center;
 }
 
-.footer-info h3 span {
-  color: var(--primary);
+.footer-brand-layout {
+    display: flex;
+    align-items: center;
+    gap: 18px;
 }
 
-.footer-info p {
-  color: var(--text-secondary);
-  max-width: 320px;
-  font-size: 14px;
+.footer-logo-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+    background: #ffffff;
+    padding: 4px;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
 }
 
-.footer-links h4, .footer-contact h4 {
-  font-size: 16px;
-  margin-bottom: 20px;
-  color: var(--text-primary);
+.footer-brand-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
-.footer-links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.footer-brand-text h3 {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.2;
+    font-family: 'Outfit', sans-serif;
 }
 
-.footer-links a {
-  color: var(--text-secondary);
-  font-size: 14px;
+.footer-brand-text h3 span {
+    color: var(--primary);
 }
 
-.footer-links a:hover {
-  color: var(--primary);
+.footer-brand-text p {
+    max-width: 520px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.footer-contact h4 {
+    font-size: 14px;
+    margin-bottom: 4px;
 }
 
 .footer-contact p {
-  color: var(--text-secondary);
-  font-size: 14px;
-  margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 2px;
 }
 
 .footer-bottom {
-  border-top: 1px solid var(--border);
-  padding-top: 20px;
-  text-align: center;
-  color: var(--text-muted);
-  font-size: 13px;
-  max-width: 1200px;
-  margin: 0 auto;
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+    padding: 6px 0;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 12px;
 }
 
-/* Responsive Media Queries */
 @media (max-width: 768px) {
-  .desktop-nav, .whatsapp-btn {
+  .desktop-nav {
     display: none;
   }
 
@@ -249,8 +432,396 @@
     display: flex;
   }
 
-  .footer-grid {
+  .header-dots-wrapper {
+    display: flex !important;
+  }
+}
+  .hero-section {
     grid-template-columns: 1fr;
-    gap: 30px;
+    text-align: center;
+    gap: 25px;
+    min-height: auto;
+  }
+
+  .hero-left {
+    text-align: center;
+  }
+
+  .hero-image {
+    max-width: 280px;
+    margin: auto;
+  }
+
+  .hero-left h1 {
+    font-size: 38px;
+    line-height: 1.2;
+  }
+
+  .hero-left p {
+    font-size: 16px;
+  }
+
+  .cta-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card {
+    padding: 24px;
+  }
+
+  .home-container {
+    padding: 20px 15px;
+  }
+
+/* ===========================
+   Floating WhatsApp Widget (Site-Wide)
+=========================== */
+
+.whatsapp-floating-container {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.whatsapp-floating-container * {
+  pointer-events: auto;
+}
+
+.whatsapp-tooltip-top {
+  background: var(--bg-card-solid);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+  white-space: nowrap;
+  animation: floatTooltip 3s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.floating-whatsapp {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.floating-whatsapp:hover {
+  transform: scale(1.12) rotate(6deg);
+  box-shadow: 0 14px 35px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-icon,
+.whatsapp-icon-svg {
+  width: 34px;
+  height: 34px;
+  display: block;
+}
+
+.pulse-ring {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border-radius: 50%;
+  border: 2px solid var(--whatsapp);
+  animation: whatsappPulse 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pulse-ring.delay {
+  animation-delay: 0.8s;
+}
+
+/* Fixed Quick Nav Sidebar (Right Side) */
+.quick-nav-fixed-container {
+  position: fixed;
+  right: 20px;
+  top: 45%;
+  transform: translateY(-50%);
+  z-index: 9999;
+}
+
+.quick-nav-toggle-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  color: var(--amber-accent);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.quick-nav-toggle-btn:hover {
+  transform: scale(1.1) rotate(90deg);
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 12px 35px rgba(99, 102, 241, 0.5);
+}
+
+.quick-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeIn 0.3s ease;
+}
+
+.quick-drawer-content {
+  width: 280px;
+  height: 100%;
+  background: var(--bg-card);
+  border-left: 1px solid var(--border);
+  padding: 30px 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+  animation: slideLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.drawer-header h4 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.close-drawer-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.drawer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.drawer-links a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 15px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+}
+
+.drawer-links a:hover {
+  background: var(--primary);
+  color: white;
+  transform: translateX(-4px);
+}
+
+.drawer-theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.theme-switch-btn {
+  background: var(--amber-glow);
+  color: var(--amber-accent);
+  border: 1px solid var(--amber-accent);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Floating Middle Side Navigation Dock (Viewport Center Right) */
+.middle-side-dock {
+  position: fixed;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 99998;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border);
+  padding: 10px 8px;
+  border-radius: 30px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(12px);
+}
+
+.dock-item {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--input-bg);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dock-icon {
+  font-size: 17px;
+  transition: transform 0.25s ease;
+}
+
+.dock-tooltip {
+  position: absolute;
+  right: 52px;
+  top: 50%;
+  transform: translateY(-50%) translateX(10px);
+  background: #3b82f6; /* Vibrant Tech Blue */
+  color: #ffffff;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.dock-item:hover {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  transform: scale(1.15);
+}
+
+.dock-item:hover .dock-icon {
+  transform: scale(1.1);
+}
+
+.dock-item:hover .dock-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(0);
+}
+
+.dock-item.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+}
+
+.dock-item.active .dock-icon {
+  filter: brightness(1.2);
+}
+
+@keyframes slideLeft {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes whatsappPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes floatTooltip {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@media (max-width: 768px) {
+  .middle-side-dock {
+    display: none !important;
+  }
+
+  .whatsapp-floating-container {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .whatsapp-tooltip-top {
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  .floating-whatsapp {
+    width: 52px;
+    height: 52px;
+    right: 0;
+    bottom: 0;
+  }
+
+  .whatsapp-icon-svg {
+    width: 28px;
+    height: 28px;
   }
 }
