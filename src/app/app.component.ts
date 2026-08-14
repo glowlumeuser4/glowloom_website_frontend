@@ -14,8 +14,8 @@ export class AppComponent implements OnInit {
   isMobileMenuOpen = false;
   isQuickMenuOpen = false;
   
-  // WhatsApp Configuration
-  whatsappNumber = '+91-7204734463';
+  // WhatsApp Configuration (Pure International Digits format without +, -, or spaces)
+  whatsappNumber = '917204734463';
   whatsappMessage = 'Hello CHANDHU Technologies! I visited your website and would like to connect.';
 
   ngOnInit() {
@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
   }
 
   get whatsappLink(): string {
-    return `https://wa.me/${this.whatsappNumber}?text=${encodeURIComponent(this.whatsappMessage)}`;
+    const cleanDigits = (this.whatsappNumber || '').replace(/\D/g, '');
+    return `https://wa.me/${cleanDigits}?text=${encodeURIComponent(this.whatsappMessage)}`;
   }
 }
