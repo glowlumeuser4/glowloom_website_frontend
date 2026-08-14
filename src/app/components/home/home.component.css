@@ -1296,7 +1296,11 @@ body.dark .creamy-box:hover {
     .sol-grid,
     .about-home {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 30px;
+    }
+
+    .featured-projects-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .hero-left {
@@ -1316,20 +1320,67 @@ body.dark .creamy-box:hover {
 
 @media (max-width: 768px) {
     .home-container {
-        padding: 30px 16px 80px;
+        padding: 20px 12px 60px;
+        overflow-x: hidden;
+    }
+
+    .featured-projects-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+    }
+
+    .project-preview-card {
+        width: 100%;
+    }
+
+    .project-img-box {
+        height: 180px;
     }
 
     .hero-left h1 {
-        font-size: 34px;
+        font-size: 28px;
+        line-height: 1.2;
     }
 
     .section-title h2 {
-        font-size: 30px;
+        font-size: 24px;
+        line-height: 1.3;
+    }
+
+    .stage-showcase-box {
+        padding: 20px 14px;
+        grid-template-columns: 1fr;
+    }
+
+    .stage-left h3 {
+        font-size: 20px;
+        line-height: 1.3;
+        word-break: break-word;
+    }
+
+    .ide-terminal {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .ide-code {
+        font-size: 11px;
+        padding: 12px;
+        white-space: pre-wrap;
+        word-break: break-word;
+        overflow-x: auto;
+    }
+
+    .solution-detail-box {
+        padding: 20px 14px;
     }
 
     .sol-features ul,
-    .mission-vision-grid {
-        grid-template-columns: 1fr;
+    .mission-vision-grid,
+    .services-grid,
+    .why-grid {
+        grid-template-columns: 1fr !important;
     }
 
     .cta-group {
