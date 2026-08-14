@@ -1,42 +1,391 @@
 <div class="home-container animate-fade">
-  <!-- Glowing Graphic Blobs (background aesthetics) -->
-  <div class="glow-blob"></div>
-  
-  <!-- Hero Section -->
-  <section class="hero-section">
-    <h1>We Build Digital Solutions That <span>Glow</span></h1>
-    <p>Glow Loom designs state-of-the-art web interfaces and robust database infrastructures tailored to scale your brand presence globally.</p>
-    <div class="cta-group">
-      <button routerLink="/projects" class="primary-btn">Explore Projects</button>
-      <button routerLink="/contact" class="secondary-btn">Connect With Us</button>
-    </div>
-  </section>
 
-  <!-- Showcase Cards Section -->
-  <section class="services-section">
-    <div class="section-title">
-      <h2>Our Core Specialties</h2>
-      <p>Providing premium services to empower your modern business.</p>
-    </div>
+    <!-- Ambient Glowing Blobs -->
+    <div class="glow-blob blob-1"></div>
+    <div class="glow-blob blob-2"></div>
+    <div class="tech-grid-overlay"></div>
 
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="card-icon">💻</div>
-        <h3>Custom Web Apps</h3>
-        <p>Highly responsive frontends built in Angular linked dynamically with database engines.</p>
-      </div>
+    <!-- ================= HERO SECTION ================= -->
+    <section class="hero-section">
+        <div class="hero-left">
+            <div class="hero-tag">
+                <span class="pulse-dot"></span>
+                🚀 Software Development Company
+            </div>
 
-      <div class="service-card">
-        <div class="card-icon">⚡</div>
-        <h3>High-Performance APIs</h3>
-        <p>Robust server-side controller pathways configured with secure token verifications.</p>
-      </div>
+            <h1>
+                Building Intelligent
+                <span class="gradient-text">Software Solutions</span>
+                for Global Tech Leaders
+            </h1>
 
-      <div class="service-card">
-        <div class="card-icon">🎨</div>
-        <h3>Modern UI/UX</h3>
-        <p>Aesthetic layouts with built-in dark mode compatibility and fluid animations.</p>
-      </div>
-    </div>
-  </section>
+            <p>
+                CHANDHU Technologies delivers AI-powered applications, enterprise software,
+                cloud solutions, web platforms, and mobile applications that accelerate business growth.
+            </p>
+
+            <div class="cta-group">
+                <button routerLink="/projects" class="primary-btn glow-btn">
+                    <span>Explore Portfolio</span>
+                    <span class="arrow">→</span>
+                </button>
+
+                <button routerLink="/contact" class="secondary-btn cream-btn">
+                    <span>Contact Us</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <!-- Seamless Bright 3D Software Team Image -->
+            <div class="bright-hero-team-wrapper">
+                <img
+                    src="assets/software-team-3d-anim.jpg"
+                    alt="Software Development Team Working Together"
+                    class="bright-team-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= HOW WE DESIGN AND DEVELOP SOFTWARE AT CHANDHU TECHNOLOGIES ================= -->
+    <section class="lifecycle-section">
+        <div class="section-title">
+            <span class="section-tag">ENGINEERING PIPELINE</span>
+            <h2>How We Design and Develop Software at CHANDHU Technologies</h2>
+            <p>From architectural blueprint to automated cloud scaling — inspect our software engineering lifecycle.</p>
+        </div>
+
+        <!-- Stage Selector Pills -->
+        <div class="lifecycle-nav">
+            <button 
+                *ngFor="let step of devSteps; let i = index" 
+                class="stage-nav-btn"
+                [class.active]="activeStepIndex === i"
+                (click)="selectStep(i)">
+                <span class="step-num">{{ step.phase }}</span>
+                <span class="step-title">{{ step.title }}</span>
+            </button>
+        </div>
+
+        <!-- Active Stage Showcase Card -->
+        <div class="stage-showcase-box creamy-box 3d-card" *ngIf="devSteps[activeStepIndex] as activeStep">
+            <div class="stage-left">
+                <div class="stage-header">
+                    <span class="stage-badge">{{ activeStep.badge }}</span>
+                </div>
+
+                <h3>
+                    <span class="stage-icon">{{ activeStep.icon }}</span>
+                    {{ activeStep.title }}
+                </h3>
+
+                <p class="stage-description">{{ activeStep.description }}</p>
+
+                <div class="stage-highlights-grid">
+                    <div class="highlight-item" *ngFor="let item of activeStep.highlights">
+                        <span class="check-icon">✓</span>
+                        <span>{{ item }}</span>
+                    </div>
+                </div>
+
+                <div class="stage-cta">
+                    <button routerLink="/contact" class="primary-btn">
+                        Get Started
+                    </button>
+                </div>
+            </div>
+
+            <div class="stage-right">
+                <!-- Simulated Live Code IDE Terminal -->
+                <div class="ide-terminal">
+                    <div class="ide-header">
+                        <div class="ide-dots">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <span class="ide-filename">chandhu-pipeline-stage-{{ activeStep.id }}.ts</span>
+                        <span class="ide-status">● RUNNING</span>
+                    </div>
+                    <pre class="ide-code"><code>{{ activeStep.codeSnippet }}</code></pre>
+                </div>
+                
+                <div class="stage-visual-img">
+                    <img src="assets/software-dev-process.jpg" alt="Software Engineering Process">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SERVICES (CREAMY COLOR BOXES) ================= -->
+    <section class="services-section">
+        <div class="section-title">
+            <span class="section-tag">OUR SERVICES</span>
+            <h2>Services</h2>
+            <p>Delivering intelligent software solutions for businesses of every scale.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card creamy-box service-card-bg" style="background-image: url('assets/ai-solution-dashboard.jpg');">
+                <div class="service-card-overlay"></div>
+                <div class="card-content-inner">
+                    <div class="card-header-bar">
+                        <div class="card-icon-box">🤖</div>
+                    </div>
+                    <h3>Artificial Intelligence</h3>
+                    <p>
+                        AI-powered applications, machine learning solutions, automation, and intelligent business systems.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-card creamy-box service-card-bg" style="background-image: url('assets/web-solution.jpg');">
+                <div class="service-card-overlay"></div>
+                <div class="card-content-inner">
+                    <div class="card-header-bar">
+                        <div class="card-icon-box">💻</div>
+                    </div>
+                    <h3>Web Development</h3>
+                    <p>
+                        Responsive websites and enterprise web applications built using modern technologies.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-card creamy-box service-card-bg" style="background-image: url('assets/mobile-solution.jpg');">
+                <div class="service-card-overlay"></div>
+                <div class="card-content-inner">
+                    <div class="card-header-bar">
+                        <div class="card-icon-box">📱</div>
+                    </div>
+                    <h3>Mobile Applications</h3>
+                    <p>
+                        Android and cross-platform mobile applications designed for performance and scalability.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-card creamy-box service-card-bg" style="background-image: url('assets/software-dev-process.jpg');">
+                <div class="service-card-overlay"></div>
+                <div class="card-content-inner">
+                    <div class="card-header-bar">
+                        <div class="card-icon-box">☁️</div>
+                    </div>
+                    <h3>Cloud Solutions</h3>
+                    <p>
+                        Cloud deployment, DevOps automation, scalable hosting, and infrastructure management.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-card creamy-box service-card-bg" style="background-image: url('assets/db-solution.jpg');">
+                <div class="service-card-overlay"></div>
+                <div class="card-content-inner">
+                    <div class="card-header-bar">
+                        <div class="card-icon-box">🗄️</div>
+                    </div>
+                    <h3>Database Engineering</h3>
+                    <p>
+                        Secure database architecture, optimization, migration, and high-performance data management.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-card creamy-box service-card-bg" style="background-image: url('assets/dev-workspace-3d.jpg');">
+                <div class="service-card-overlay"></div>
+                <div class="card-content-inner">
+                    <div class="card-header-bar">
+                        <div class="card-icon-box">⚙️</div>
+                    </div>
+                    <h3>Enterprise Software</h3>
+                    <p>
+                        Custom software solutions designed to automate business processes and improve productivity.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-card creamy-box service-card-bg" style="background-image: url('assets/software-dev-process.jpg');">
+                <div class="service-card-overlay"></div>
+                <div class="card-content-inner">
+                    <div class="card-header-bar">
+                        <div class="card-icon-box">🛠️</div>
+                    </div>
+                    <h3>Technical Support</h3>
+                    <p>
+                        24/7 server monitoring, security patching, bug fixes, and continuous infrastructure maintenance.
+                    </p>
+                </div>
+            </div>
+
+            <div class="service-card creamy-box service-card-bg" style="background-image: url('assets/company.jpg');">
+                <div class="service-card-overlay"></div>
+                <div class="card-content-inner">
+                    <div class="card-header-bar">
+                        <div class="card-icon-box">🎧</div>
+                    </div>
+                    <h3>Customer Support</h3>
+                    <p>
+                        Dedicated customer helpdesk, user onboarding support, ticket resolution, and 24/7 client success.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= INTELLIGENT SOLUTIONS ================= -->
+    <section class="solutions-section">
+        <div class="section-title">
+            <span class="section-tag">SOLUTIONS</span>
+            <h2>Intelligent Solutions</h2>
+            <p>Delivering intelligent software solutions that drive business growth.</p>
+        </div>
+
+        <div class="solution-tabs">
+            <button 
+                *ngFor="let sol of solutions" 
+                class="sol-tab-btn"
+                [class.active]="activeSolutionId === sol.id"
+                (click)="selectSolution(sol.id)">
+                <span>{{ sol.icon }}</span>
+                {{ sol.title }}
+            </button>
+        </div>
+
+        <div class="solution-detail-box creamy-box" *ngIf="currentSolution">
+            <div class="sol-grid">
+                <div class="sol-info">
+                    <span class="sol-tagline">{{ currentSolution.tagline }}</span>
+                    <h3>{{ currentSolution.icon }} {{ currentSolution.title }}</h3>
+                    <p>{{ currentSolution.description }}</p>
+
+                    <div class="sol-features">
+                        <h4>Key Deliverables:</h4>
+                        <ul>
+                            <li *ngFor="let feat of currentSolution.keyFeatures">
+                                <span class="bullet-star">✦</span> {{ feat }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <button routerLink="/contact" class="primary-btn glow-btn margin-top-20">
+                        Get Started
+                    </button>
+                </div>
+
+                <div class="sol-visual">
+                    <img [src]="currentSolution.imageSrc" [alt]="currentSolution.title" class="sol-dashboard-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= WHY CHOOSE CHANDHU TECHNOLOGIES ================= -->
+    <section class="why-section">
+        <div class="section-title">
+            <span class="section-tag">WHY CHOOSE US</span>
+            <h2>Why Choose CHANDHU Technologies?</h2>
+            <p>Delivering technology with innovation, quality and reliability.</p>
+        </div>
+
+        <div class="why-grid">
+            <div class="why-card why-card-indigo creamy-box">
+                <div class="why-icon icon-indigo">✅</div>
+                <h3>Experienced Development Team</h3>
+                <p>Senior developers and software engineers delivering robust code.</p>
+            </div>
+
+            <div class="why-card why-card-amber creamy-box">
+                <div class="why-icon icon-amber">🤖</div>
+                <h3>AI Powered Solutions</h3>
+                <p>Intelligent algorithms and automation built into your workflow.</p>
+            </div>
+
+            <div class="why-card why-card-cyan creamy-box">
+                <div class="why-icon icon-cyan">☁️</div>
+                <h3>Cloud & DevOps Expertise</h3>
+                <p>Scalable cloud infrastructure and automated deployment pipelines.</p>
+            </div>
+
+            <div class="why-card why-card-emerald creamy-box">
+                <div class="why-icon icon-emerald">📱</div>
+                <h3>Mobile & Web Applications</h3>
+                <p>Cross-platform mobile apps and responsive enterprise web portals.</p>
+            </div>
+
+            <div class="why-card why-card-purple creamy-box">
+                <div class="why-icon icon-purple">🔒</div>
+                <h3>Secure Enterprise Software</h3>
+                <p>Enterprise grade security, data protection, and encryption.</p>
+            </div>
+
+            <div class="why-card why-card-rose creamy-box">
+                <div class="why-icon icon-rose">⚡</div>
+                <h3>Fast Delivery & Support</h3>
+                <p>Agile development timelines and continuous ongoing technical support.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FEATURED PROJECTS ================= -->
+    <section class="featured-section">
+        <div class="section-title">
+            <span class="section-tag">PORTFOLIO</span>
+            <h2>Featured Projects</h2>
+            <p>Innovative solutions delivered across multiple industries.</p>
+        </div>
+
+        <div class="featured-projects-grid">
+            <div class="project-preview-card creamy-box" routerLink="/projects">
+                <div class="project-img-box" style="background-image: url('assets/dhriti-mart.jpg');">
+                    <span class="home-status-badge ongoing">🟢 Ongoing</span>
+                    <div class="project-hover-overlay">
+                        <h4>Dhriti Mart</h4>
+                        <p>Agricultural e-commerce platform connecting manufacturers, vendors, and customers.</p>
+                        <span class="project-tag">Explore Project ➔</span>
+                    </div>
+                </div>
+                <div class="project-info-bar">
+                    <h3>Dhriti Mart E-Commerce</h3>
+                    <p>Agricultural digital marketplace with full admin & call support.</p>
+                </div>
+            </div>
+
+            <div class="project-preview-card creamy-box" routerLink="/projects">
+                <div class="project-img-box" style="background-image: url('assets/cropcure-ai.jpg');">
+                    <span class="home-status-badge upcoming">🚀 Upcoming</span>
+                    <div class="project-hover-overlay">
+                        <h4>CropCure AI</h4>
+                        <p>AI crop health diagnosis, disease detection & organic advisory platform.</p>
+                        <span class="project-tag">Explore Project ➔</span>
+                    </div>
+                </div>
+                <div class="project-info-bar">
+                    <h3>CropCure AI Advisory</h3>
+                    <p>AI-powered leaf & crop photo disease diagnosis & advisory.</p>
+                </div>
+            </div>
+
+            <div class="project-preview-card creamy-box" routerLink="/projects">
+                <div class="project-img-box" style="background-image: url('assets/stock-ai-candlestick.jpg');">
+                    <span class="home-status-badge completed">✨ Completed</span>
+                    <div class="project-hover-overlay">
+                        <h4>AI-Based Stock Market Prediction</h4>
+                        <p>Real-time candlestick trading signals, technical graphs & sentiment analysis.</p>
+                        <span class="project-tag">Explore Project ➔</span>
+                    </div>
+                </div>
+                <div class="project-info-bar">
+                    <h3>AI Stock Market Prediction</h3>
+                    <p>High-frequency stock prediction system and trade analytics.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="center-cta-wrap">
+            <button routerLink="/projects" class="primary-btn glow-btn">
+                View All Projects
+            </button>
+        </div>
+    </section>
+
 </div>

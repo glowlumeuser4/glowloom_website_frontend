@@ -12,10 +12,11 @@ import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 export class AppComponent implements OnInit {
   isDarkMode = false;
   isMobileMenuOpen = false;
+  isQuickMenuOpen = false;
   
   // WhatsApp Configuration
-  whatsappNumber = '+917204734463'; // Replace with your number (country code + number)
-  whatsappMessage = 'Hello Glow Loom! I visited your website and would like to connect.';
+  whatsappNumber = '+91-7204734463';
+  whatsappMessage = 'Hello CHANDHU Technologies! I visited your website and would like to connect.';
 
   ngOnInit() {
     const savedTheme = localStorage.getItem('theme');
@@ -40,9 +41,23 @@ export class AppComponent implements OnInit {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
-  // 👈 Added this missing method to close mobile drawer on route click
+  toggleQuickMenu() {
+    this.isQuickMenuOpen = !this.isQuickMenuOpen;
+  }
+
   closeMobileMenu() {
     this.isMobileMenuOpen = false;
+  }
+
+  scrollToSection(event: Event, sectionId: string) {
+    event.preventDefault();
+    this.closeMobileMenu();
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.location.href = '/#' + sectionId;
+    }
   }
 
   get whatsappLink(): string {

@@ -5,10 +5,13 @@ import { Observable } from 'rxjs';
 export interface Project {
   id?: string;
   project_name: string;
+  status?: string;
   reference_images_for_image: string[];
-  project_description: string;
+  full_description: string;
+  applications: string;
   technologies_used: string;
   createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface ContactData {
@@ -34,6 +37,7 @@ export class ApiService {
   }
 
   submitContact(data: ContactData): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/contact`, data);
+    return this.http.post(`${this.apiUrl}/contact`, data);
   }
+
 }

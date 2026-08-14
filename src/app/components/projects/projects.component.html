@@ -1,91 +1,193 @@
 <div class="projects-container animate-fade">
+
+  <!-- Header -->
   <section class="projects-header">
-    <h1>Our Projects</h1>
-    <p>A directory of our projects pulled directly from the backend database.</p>
+    <h1>Our Projects Showcase</h1>
+    <p>Explore production-ready software platforms, enterprise applications, and AI integrations built by CHANDHU Technologies.</p>
+
+    <!-- Filter Pills -->
+    <div class="category-filter-bar">
+      <button 
+        *ngFor="let cat of categories" 
+        class="filter-pill" 
+        [class.active]="selectedCategory === cat"
+        (click)="filterCategory(cat)">
+        {{ cat }}
+      </button>
+    </div>
   </section>
 
-  <!-- Filter Navigation bar -->
-  <div class="filter-bar">
-    <button 
-      *ngFor="let cat of categories" 
-      (click)="filterCategory(cat)"
-      [class.active]="selectedCategory === cat"
-      class="filter-chip">
-      {{ cat }}
-    </button>
-  </div>
-
-  <!-- Loading & Error States -->
+  <!-- Loading -->
   <div *ngIf="loading" class="loading-state">
     Fetching project records...
   </div>
+
+  <!-- Error -->
   <div *ngIf="error" class="error-state">
     {{ error }}
   </div>
 
-  <!-- Grid Display -->
+  <!-- Projects -->
   <div *ngIf="!loading && !error" class="projects-grid">
-    <div 
-      *ngFor="let project of filteredProjects" 
+
+    <div
+      *ngFor="let project of filteredProjects"
       class="project-card"
       (click)="openLightbox(project)">
-      
+
       <div class="card-media">
-        <!-- Render first image of reference JSON array -->
-        <img [src]="project.reference_images_for_image[0]" [alt]="project.project_name" />
+        <img
+          [src]="project.reference_images_for_image[0]"
+          [alt]="project.project_name">
+
+        <span *ngIf="project.status" class="status-badge" [ngClass]="{
+          'status-ongoing': project.status === 'Ongoing',
+          'status-upcoming': project.status === 'Upcoming',
+          'status-completed': project.status === 'Completed'
+        }">
+          {{ project.status === 'Ongoing' ? '🟢 Ongoing' : (project.status === 'Upcoming' ? '🚀 Upcoming' : '✨ Completed') }}
+        </span>
+
         <div class="hover-overlay">
-          <span>🔍 View Project Details</span>
+          <div class="overlay-content">
+            <h4>{{ project.project_name }}</h4>
+            <p>{{ project.full_description | slice:0:110 }}...</p>
+            <span class="view-btn">🔍 View Details</span>
+          </div>
         </div>
       </div>
-      
+
       <div class="card-details">
-        <h3>{{ project.project_name }}</h3>
-        <p>{{ project.project_description | slice:0:110 }}...</p>
+
+        <div class="card-title-row">
+          <h3>{{ project.project_name }}</h3>
+          <span *ngIf="project.status" class="status-chip" [ngClass]="{
+            'status-ongoing': project.status === 'Ongoing',
+            'status-upcoming': project.status === 'Upcoming',
+            'status-completed': project.status === 'Completed'
+          }">
+            {{ project.status === 'Ongoing' ? '🟢 Ongoing' : (project.status === 'Upcoming' ? '🚀 Upcoming' : '✨ Completed') }}
+          </span>
+        </div>
+
+        <p>
+          {{ project.full_description | slice:0:120 }}...
+        </p>
+
         <div class="tech-tags">
           <span *ngFor="let tech of project.technologies_used.split(',')">
             {{ tech.trim() }}
           </span>
         </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Lightbox Modal popup -->
-  <div class="lightbox-modal" *ngIf="selectedProject" (click)="closeLightbox()">
-    <div class="lightbox-content" (click)="$event.stopPropagation()">
-      <button class="close-btn" (click)="closeLightbox()">✕</button>
-      
-      <div class="lightbox-gallery">
-        <img [src]="selectedProject.reference_images_for_image[activeImageIndex]" [alt]="selectedProject.project_name" />
-        
-        <!-- Carousels Controls if more than one image exists -->
-        <div class="nav-arrows" *ngIf="selectedProject.reference_images_for_image.length > 1">
-          <button (click)="prevImage($event)">◀</button>
-          <button (click)="nextImage($event)">▶</button>
-        </div>
-        
-        <!-- Carousel Dots indicator -->
-        <div class="gallery-dots" *ngIf="selectedProject.reference_images_for_image.length > 1">
-          <span 
-            *ngFor="let img of selectedProject.reference_images_for_image; let idx = index"
-            [class.active]="activeImageIndex === idx">
-          </span>
-        </div>
       </div>
 
-      <div class="lightbox-info">
-        <h2>{{ selectedProject.project_name }}</h2>
-        <p class="desc">{{ selectedProject.project_description }}</p>
-        
-        <div class="info-block">
-          <strong>Technologies:</strong>
-          <div class="tech-tags">
-            <span *ngFor="let tech of selectedProject.technologies_used.split(',')">
-              {{ tech.trim() }}
-            </span>
-          </div>
-        </div>
-      </div>
     </div>
+
   </div>
+
+  <!-- Project Details Popup -->
+ <!-- Lightbox -->
+<div
+  class="lightbox-modal"
+  *ngIf="selectedProject"
+  (click)="closeLightbox()">
+
+  <div
+    class="project-modal"
+    (click)="$event.stopPropagation()">
+
+    <button class="close-btn" (click)="closeLightbox()">
+      ✕
+    </button>
+
+    <div class="modal-header-flex">
+      <span *ngIf="selectedProject.status" class="status-badge-lg" [ngClass]="{
+        'status-ongoing': selectedProject.status === 'Ongoing',
+        'status-upcoming': selectedProject.status === 'Upcoming',
+        'status-completed': selectedProject.status === 'Completed'
+      }">
+        {{ selectedProject.status === 'Ongoing' ? '🟢 Ongoing Project' : (selectedProject.status === 'Upcoming' ? '🚀 Upcoming Project' : '✨ Completed Project') }}
+      </span>
+      <h2 class="project-title">
+        {{ selectedProject.project_name }}
+      </h2>
+    </div>
+
+    <div class="project-image">
+
+      <img
+        [src]="selectedProject.reference_images_for_image[activeImageIndex]"
+        [alt]="selectedProject.project_name">
+
+      <div
+        class="nav-arrows"
+        *ngIf="selectedProject.reference_images_for_image.length > 1">
+
+        <button (click)="prevImage($event)">◀</button>
+        <button (click)="nextImage($event)">▶</button>
+
+      </div>
+
+      <div
+        class="gallery-dots"
+        *ngIf="selectedProject.reference_images_for_image.length > 1">
+
+        <span
+          *ngFor="let img of selectedProject.reference_images_for_image; let idx=index"
+          [class.active]="activeImageIndex==idx">
+        </span>
+
+      </div>
+
+    </div>
+
+    <div class="section">
+
+      <h3>Overview</h3>
+
+      <p class="description">
+
+        {{ selectedProject.full_description }}
+
+      </p>
+
+    </div>
+
+    <div class="section">
+
+      <h3>Applications</h3>
+
+      <ul class="application-list">
+
+        <li
+          *ngFor="let app of selectedProject.applications.split(',')">
+
+          {{ app.trim() }}
+
+        </li>
+
+      </ul>
+
+    </div>
+
+    <div class="section">
+
+      <h3>Technologies Used</h3>
+
+      <div class="tech-tags">
+
+        <span
+          *ngFor="let tech of selectedProject.technologies_used.split(',')">
+
+          {{ tech.trim() }}
+
+        </span>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </div>

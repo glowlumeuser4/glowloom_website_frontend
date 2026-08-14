@@ -1,36 +1,110 @@
 <div class="about-container animate-fade">
-  <!-- Banner Title Section -->
-  <section class="banner-section">
-    <h1>About Our Agency</h1>
-    <p>Learn more about Glow Loom's journey, values, and vision for the future.</p>
-  </section>
 
-  <!-- Detailed Split Grid Section -->
+  <!-- Who We Are (Top Section) -->
   <section class="split-section">
     <div class="split-content">
       <h2>Who We Are</h2>
-      <p>Glow Loom is an integrated creative agency specializing in modern engineering solutions. We bridge the gap between design and scalable databases, helping businesses create platforms that capture client interest and retain high performance under load.</p>
+      <p>CHANDHU Technologies is an integrated creative company specializing in modern engineering solutions. We bridge the gap between design and scalable databases, helping businesses create platforms that capture client interest and retain high performance under load.</p>
       <p>Our collaborative approach treats our clients as development partners. Every project begins with mapping custom schemas and user experiences to match the brand identity.</p>
     </div>
     <div class="split-image">
-      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="Glow Loom Team Workspace" />
+      <img src="assets/company.jpg" alt="CHANDHU Technologies Team Workspace" />
     </div>
   </section>
 
-  <!-- Mission and Vision Cards -->
+  <!-- Mission and Vision Cards (Blue Mission, Green Vision) -->
   <section class="cards-section">
-    <div class="card-element">
+    <div class="card-element mission-card creamy-box">
       <div class="card-header">
-        <h3>Our Mission</h3>
+        <h3 class="mission-title">🎯 Our Mission</h3>
       </div>
-      <p>To design web applications that function flawlessly, delivering beautiful frontends backed by organized data schemas.</p>
+      <p>To empower businesses with innovative, scalable, and intelligent software solutions that simplify operations, accelerate growth, and create long-term digital value through technology.</p>
     </div>
 
-    <div class="card-element">
+    <div class="card-element vision-card creamy-box">
       <div class="card-header">
-        <h3>Our Vision</h3>
+        <h3 class="vision-title">🌟 Our Vision</h3>
       </div>
-      <p>To become a premier agency for custom software implementation, enabling businesses to leverage technology without design limitations.</p>
+      <p>To become a globally recognized technology company known for delivering cutting-edge AI solutions, enterprise software, and digital transformation services while maintaining excellence, innovation, and customer success.</p>
     </div>
   </section>
+
+  <!-- Management (2 Persons in One Row) -->
+  <section class="team-section">
+    <h2 class="team-title">Our Management</h2>
+
+    <div class="leadership-grid">
+      <div 
+        *ngFor="let leader of managementList" 
+        class="leader-card creamy-box clickable-profile-card"
+        (click)="openMemberModal(leader)">
+        
+        <img *ngIf="leader.photoUrl" [src]="leader.photoUrl" [alt]="leader.name" class="leader-photo-img" [ngClass]="leader.iconClass" />
+        <div *ngIf="!leader.photoUrl" class="leader-avatar-box" [ngClass]="leader.iconClass">{{ leader.icon }}</div>
+        
+        <h3>{{ leader.name }}</h3>
+        <h4>{{ leader.role }}</h4>
+        <p>{{ leader.title }}</p>
+        <span class="click-hint">Click for Profile ➔</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meet Our Team Grid -->
+  <section class="team-section">
+    <h2 class="team-title">Meet Our Team</h2>
+
+    <div class="team-grid">
+      <div 
+        *ngFor="let member of teamList" 
+        class="team-card creamy-box clickable-profile-card"
+        (click)="openMemberModal(member)">
+        
+        <img *ngIf="member.photoUrl" [src]="member.photoUrl" [alt]="member.name" class="team-photo-img" [ngClass]="member.iconClass" />
+        <div *ngIf="!member.photoUrl" class="team-avatar-box" [ngClass]="member.iconClass">{{ member.icon }}</div>
+        
+        <h3>{{ member.name }}</h3>
+        <h4>{{ member.role }}</h4>
+        <p>{{ member.title }}</p>
+        <span class="click-hint">View Profile ➔</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ================= INTERACTIVE MEMBER PROFILE MODAL POPUP ================= -->
+<div class="profile-modal-overlay" *ngIf="selectedMember" (click)="closeMemberModal()">
+  <div class="profile-modal-card creamy-box" (click)="$event.stopPropagation()">
+    <button class="close-modal-btn" (click)="closeMemberModal()">✕</button>
+
+    <div class="modal-body-grid">
+      <div class="modal-photo-col">
+        <div class="photo-frame">
+          <img *ngIf="selectedMember.photoUrl" [src]="selectedMember.photoUrl" [alt]="selectedMember.name" class="modal-large-photo" />
+          <div *ngIf="!selectedMember.photoUrl" class="modal-avatar-fallback" [ngClass]="selectedMember.iconClass">
+            {{ selectedMember.icon }}
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-info-col">
+        <span class="modal-badge">{{ selectedMember.badge || 'Engineering Team' }}</span>
+        <h2>{{ selectedMember.name }}</h2>
+        <h3 class="modal-role">{{ selectedMember.role }}</h3>
+        <h4 class="modal-title">{{ selectedMember.title }}</h4>
+
+        <p class="modal-bio">{{ selectedMember.description }}</p>
+
+        <div class="modal-skills-wrap">
+          <h5>Core Specialties:</h5>
+          <div class="skills-tags">
+            <span *ngFor="let skill of selectedMember.skills" class="skill-pill">
+              ✦ {{ skill }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
