@@ -23,7 +23,9 @@ export interface ContactData {
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'http://localhost:5000/api';
+  private apiUrl = window.location.hostname === 'localhost' 
+  ? 'http://localhost:5000/api' 
+  : 'https://glowloom-website-backend.vercel.app/api';
 
   constructor(private http: HttpClient) {}
 
