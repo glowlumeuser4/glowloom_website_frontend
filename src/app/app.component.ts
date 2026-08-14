@@ -62,6 +62,18 @@ export class AppComponent implements OnInit {
 
   get whatsappLink(): string {
     const cleanDigits = (this.whatsappNumber || '').replace(/\D/g, '');
-    return `https://wa.me/${cleanDigits}?text=${encodeURIComponent(this.whatsappMessage)}`;
+    return `https://api.whatsapp.com/send?phone=${cleanDigits}&text=${encodeURIComponent(this.whatsappMessage)}`;
+  }
+
+  openWhatsApp(event?: Event): void {
+    if (event) {
+      event.preventDefault();
+    }
+    const cleanDigits = (this.whatsappNumber || '').replace(/\D/g, '');
+    const msg = encodeURIComponent(this.whatsappMessage);
+    
+    // api.whatsapp.com/send is universally registered in iOS Universal Links & Android Intents
+    const targetUrl = `https://api.whatsapp.com/send?phone=${cleanDigits}&text=${msg}`;
+    window.open(targetUrl, '_blank', 'noopener,noreferrer');
   }
 }
