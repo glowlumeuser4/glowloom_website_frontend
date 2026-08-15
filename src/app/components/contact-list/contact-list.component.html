@@ -1,0 +1,102 @@
+<div class="contact-list-container animate-fade">
+  
+  <header class="list-header">
+    <h1>Inquiries & Contacts Directory</h1>
+    <p>View client messages and contact details submitted via CHANDHU Technologies forms.</p>
+  </header>
+
+  <!-- Filter & Settings Bar -->
+  <div class="settings-bar">
+    <div class="date-filters">
+      <div class="input-group">
+        <label>From Date</label>
+        <input type="date" [(ngModel)]="startDate" class="date-input" />
+      </div>
+      <div class="input-group">
+        <label>To Date</label>
+        <input type="date" [(ngModel)]="endDate" class="date-input" />
+      </div>
+      <div class="btn-group">
+        <button (click)="applyFilters()" class="apply-btn">Apply Filters</button>
+        <button (click)="resetFilters()" class="reset-btn">Reset</button>
+      </div>
+    </div>
+
+    <!-- Rows per Page Selector -->
+    <div class="limit-selector">
+      <label>Show:</label>
+      <select [(ngModel)]="limit" (change)="onLimitChange()" class="select-input">
+        <option [value]="5">5 rows</option>
+        <option [value]="10">10 rows</option>
+        <option [value]="20">20 rows</option>
+        <option [value]="50">50 rows</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Loading & Empty states -->
+  <div *ngIf="loading" class="state-box">
+    <span class="spinner">⏳</span> Fetching database records...
+  </div>
+
+  <div *ngIf="error" class="state-box error-text">
+    ⚠️ {{ error }}
+  </div>
+
+  <!-- Responsive Table -->
+  <div *ngIf="!loading && !error" class="table-wrapper">
+    <table class="contacts-table">
+      <thead>
+        <tr>
+          <th>Date Subitted</th>
+          <th>Full Name</th>
+          <th>Email Address</th>
+          <th>Phone Number</th>
+          <th>Purpose of Contact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts">
+          <td class="date-col">{{ contact.createdAt | date:'dd-MMM-yyyy hh:mm a' }}</td>
+          <td class="name-col font-bold">{{ contact.user_first_name }} {{ contact.user_last_name }}</td>
+          <td>
+            <a href="mailto:{{ contact.user_email_id }}" class="email-link">
+              {{ contact.user_email_id }}
+            </a>
+          </td>
+          <td class="phone-col">{{ contact.user_contact_number }}</td>
+          <td class="desc-col">{{ contact.purpouse_of_contact || 'No message provided.' }}</td>
+        </tr>
+        <tr *ngIf="contacts.length === 0">
+          <td colspan="5" class="empty-row">No records found matching current date criteria.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div *ngIf="!loading && !error && contacts.length > 0" class="pagination-footer">
+    <span class="total-count">
+      Showing {{ (page - 1) * limit + 1 }} to {{ page * limit > totalItems ? totalItems : page * limit }} of {{ totalItems }} records
+    </span>
+
+    <div class="pagination-buttons">
+      <button 
+        [disabled]="page === 1" 
+        (click)="onPageChange(page - 1)" 
+        class="pag-btn">
+        ◀ Previous
+      </button>
+
+      <span class="page-indicator">Page {{ page }} of {{ totalPages }}</span>
+
+      <button 
+        [disabled]="page === totalPages" 
+        (click)="onPageChange(page + 1)" 
+        class="pag-btn">
+        Next ▶
+      </button>
+    </div>
+  </div>
+
+</div>

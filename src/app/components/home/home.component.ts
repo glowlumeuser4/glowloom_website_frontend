@@ -219,7 +219,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       name: 'Bhavesh',
       role: 'Backend Developer',
       title: 'AI Engineer',
-      icon: '🧠',
+      photoUrl: 'assets/bhavesh.jpeg',
       iconClass: 'ai-box',
       description: 'AI logic engineer developing custom machine learning pipelines, NLP automation models, and real-time predictive analytics.',
       skills: ['PyTorch & TensorFlow', 'Machine Learning', 'FastAPI', 'Neural Networks']
