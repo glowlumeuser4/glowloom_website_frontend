@@ -158,3 +158,20 @@
     gap: 0;
   }
 }
+
+
+/* Validation Error Messages */
+.error-msg {
+  color: #dc3545; /* Clean Red Error Color */
+  font-size: 12px;
+  font-weight: 500;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  animation: fadeInError 0.2s ease;
+}
+
+@keyframes fadeInError {
+  from { opacity: 0; transform: translateY(-3px); }
+  to { opacity: 1; transform: translateY(0); }
+}

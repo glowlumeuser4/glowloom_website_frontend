@@ -45,6 +45,7 @@
         </div>
 
         <div class="form-row">
+          <!-- First Name Field -->
           <div class="form-group">
             <label for="firstName">First Name *</label>
             <input 
@@ -52,12 +53,19 @@
               id="firstName" 
               name="firstName"
               required 
+              minlength="2"
               [(ngModel)]="formData.user_first_name" 
               #firstName="ngModel"
               [class.error-input]="firstName.invalid && firstName.touched"
               placeholder="First name" />
+            <!-- First Name Validation Message -->
+            <div class="error-msg" *ngIf="firstName.invalid && firstName.touched">
+              <span *ngIf="firstName.errors?.['required']">First name is required.</span>
+              <span *ngIf="firstName.errors?.['minlength']">Must be at least 2 characters.</span>
+            </div>
           </div>
 
+          <!-- Last Name Field -->
           <div class="form-group">
             <label for="lastName">Last Name *</label>
             <input 
@@ -65,13 +73,19 @@
               id="lastName" 
               name="lastName"
               required 
+              minlength="1"
               [(ngModel)]="formData.user_last_name" 
               #lastName="ngModel"
               [class.error-input]="lastName.invalid && lastName.touched"
               placeholder="Last name" />
+            <!-- Last Name Validation Message -->
+            <div class="error-msg" *ngIf="lastName.invalid && lastName.touched">
+              <span *ngIf="lastName.errors?.['required']">Last name is required.</span>
+            </div>
           </div>
         </div>
 
+        <!-- Email Field -->
         <div class="form-group">
           <label for="email">Email Address *</label>
           <input 
@@ -84,8 +98,14 @@
             #email="ngModel"
             [class.error-input]="email.invalid && email.touched"
             placeholder="example&#64;domain.com" />
+          <!-- Email Validation Message -->
+          <div class="error-msg" *ngIf="email.invalid && email.touched">
+            <span *ngIf="email.errors?.['required']">Email address is required.</span>
+            <span *ngIf="email.errors?.['email']">Please enter a valid email format.</span>
+          </div>
         </div>
 
+        <!-- Phone Field -->
         <div class="form-group">
           <label for="phone">Phone Number *</label>
           <input 
@@ -93,12 +113,19 @@
             id="phone" 
             name="phone"
             required 
+            pattern="[0-9]{10}"
             [(ngModel)]="formData.user_contact_number" 
             #phone="ngModel"
             [class.error-input]="phone.invalid && phone.touched"
             placeholder="10-digit number" />
+          <!-- Phone Validation Message -->
+          <div class="error-msg" *ngIf="phone.invalid && phone.touched">
+            <span *ngIf="phone.errors?.['required']">Phone number is required.</span>
+            <span *ngIf="phone.errors?.['pattern']">Please enter a valid 10-digit phone number.</span>
+          </div>
         </div>
 
+        <!-- Purpose Field -->
         <div class="form-group">
           <label for="purpose">Purpose of Contact (Optional)</label>
           <textarea 
