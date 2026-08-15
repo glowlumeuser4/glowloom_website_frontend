@@ -27,7 +27,7 @@
     {{ error }}
   </div>
 
-  <!-- Projects -->
+  <!-- Projects Grid -->
   <div *ngIf="!loading && !error" class="projects-grid">
 
     <div
@@ -86,8 +86,9 @@
 
   </div>
 
-  <!-- Project Details Popup -->
- <!-- Lightbox -->
+</div> <!-- 👈 CLOSED the projects-container here so transform animation does not affect the modal -->
+
+<!-- Lightbox Modal (Placed outside the container for absolute viewport centering) -->
 <div
   class="lightbox-modal"
   *ngIf="selectedProject"
@@ -147,9 +148,7 @@
       <h3>Overview</h3>
 
       <p class="description">
-
         {{ selectedProject.full_description }}
-
       </p>
 
     </div>
@@ -159,14 +158,9 @@
       <h3>Applications</h3>
 
       <ul class="application-list">
-
-        <li
-          *ngFor="let app of selectedProject.applications.split(',')">
-
+        <li *ngFor="let app of selectedProject.applications.split(',')">
           {{ app.trim() }}
-
         </li>
-
       </ul>
 
     </div>
@@ -176,14 +170,9 @@
       <h3>Technologies Used</h3>
 
       <div class="tech-tags">
-
-        <span
-          *ngFor="let tech of selectedProject.technologies_used.split(',')">
-
+        <span *ngFor="let tech of selectedProject.technologies_used.split(',')">
           {{ tech.trim() }}
-
         </span>
-
       </div>
 
     </div>

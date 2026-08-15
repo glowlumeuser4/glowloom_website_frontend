@@ -10,11 +10,12 @@ import { ApiService, Project } from '../../services/api.service';
   styleUrl: './projects.component.css'
 })
 export class ProjectsComponent implements OnInit {
+  // Pre-load default projects immediately so there is no blank screen or loading blocker
   projects: Project[] = [];
   filteredProjects: Project[] = [];
   categories: string[] = ['All'];
   selectedCategory = 'All';
-  loading = true;
+  loading = false; // Set to false initially since we display default projects instantly
   error: string | null = null;
   
   // Lightbox Modal state
@@ -72,14 +73,33 @@ export class ProjectsComponent implements OnInit {
   constructor(private apiService: ApiService) {}
 
   ngOnInit(): void {
+    // 1. Instantly render the default projects and set up initial categories
+    this.projects = [...this.defaultProjects];
+    this.filteredProjects = [...this.defaultProjects];
+    this.generateCategories();
+
+    // 2. Fetch fresh data from backend database in the background
     this.fetchProjects();
   }
 
+  generateCategories(): void {
+    const techSet = new Set<string>();
+    this.projects.forEach(p => {
+      if (p.technologies_used) {
+        p.technologies_used.split(',').forEach(tech => {
+          techSet.add(tech.trim());
+        });
+      }
+    });
+    this.categories = ['All', ...Array.from(techSet)];
+  }
+
   fetchProjects(): void {
-    this.loading = true;
+    // We don't set loading = true anymore to prevent blocking the screen
     this.apiService.getProjects().subscribe({
       next: (data) => {
         if (data && data.length > 0) {
+          // Merge database items, mapping them with corresponding asset images
           this.projects = data.map(p => {
             const pName = p.project_name.toLowerCase();
             let matchedLocal: Project | undefined;
@@ -106,19 +126,16 @@ export class ProjectsComponent implements OnInit {
               technologies_used: p.technologies_used || matchedLocal?.technologies_used || ''
             };
           });
-          this.filteredProjects = this.projects;
-        } else {
-          this.projects = this.defaultProjects;
-          this.filteredProjects = this.defaultProjects;
+          
+          // Re-generate categories dynamically based on the latest database items
+          this.generateCategories();
+          
+          // Apply current active category filter to the fresh list
+          this.filterCategory(this.selectedCategory);
         }
-        this.loading = false;
       },
       error: (err) => {
-        console.warn('API offline - loading local project showcase records.', err);
-        this.projects = this.defaultProjects;
-        this.filteredProjects = this.defaultProjects;
-        this.error = null;
-        this.loading = false;
+        console.warn('API connection slow/offline - using preloaded project records.', err);
       }
     });
   }
