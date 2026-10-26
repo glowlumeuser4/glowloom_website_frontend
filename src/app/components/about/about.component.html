@@ -7,9 +7,6 @@
       <p>CHANDHU Technologies is an integrated creative company specializing in modern engineering solutions. We bridge the gap between design and scalable databases, helping businesses create platforms that capture client interest and retain high performance under load.</p>
       <p>Our collaborative approach treats our clients as development partners. Every project begins with mapping custom schemas and user experiences to match the brand identity.</p>
     </div>
-    <div class="split-image">
-      <img src="assets/company.jpg" alt="CHANDHU Technologies Team Workspace" />
-    </div>
   </section>
 
   <!-- Mission and Vision Cards (Blue Mission, Green Vision) -->
@@ -36,8 +33,7 @@
     <div class="leadership-grid">
       <div 
         *ngFor="let leader of managementList" 
-        class="leader-card creamy-box clickable-profile-card"
-        (click)="openMemberModal(leader)">
+        class="leader-card creamy-box">
         
         <img *ngIf="leader.photoUrl" [src]="leader.photoUrl" [alt]="leader.name" class="leader-photo-img" [ngClass]="leader.iconClass" />
         <div *ngIf="!leader.photoUrl" class="leader-avatar-box" [ngClass]="leader.iconClass">{{ leader.icon }}</div>
@@ -45,7 +41,6 @@
         <h3>{{ leader.name }}</h3>
         <h4>{{ leader.role }}</h4>
         <p>{{ leader.title }}</p>
-        <span class="click-hint">Click for Profile ➔</span>
       </div>
     </div>
   </section>
