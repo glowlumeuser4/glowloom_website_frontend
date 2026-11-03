@@ -77,6 +77,77 @@
         </div>
     </section>
 
+
+    <!-- ================= PROJECT DOMAINS (AGRICULTURE, TOURS & TRAVELS, HEALTHCARE, CONSTRUCTIONS) ================= -->
+    <section class="domains-marquee-section">
+        <div class="section-title">
+            <span class="section-tag">PROJECT DOMAINS</span>
+            <h2>Key Industry Fields of Our Projects</h2>
+            <p>Proven enterprise software, cloud portals, and AI systems engineered across core global industries.</p>
+        </div>
+
+        <div class="marquee-wrapper">
+            <div class="marquee-track">
+                <!-- Group 1 -->
+                <div class="domain-card creamy-box" *ngFor="let domain of projectDomains" [style.--accent]="domain.accentColor" [class.clickable-domain]="!!domainDetailsMap[domain.id]" (click)="openDomainModal(domain)">
+                    <div class="domain-card-header">
+                        <div class="domain-icon-badge">{{ domain.icon }}</div>
+                        <span class="domain-tag">{{ domain.badge }}</span>
+                    </div>
+                    <h3>{{ domain.name }}</h3>
+                    <div class="domain-tagline">{{ domain.tagline }}</div>
+                    <p>{{ domain.description }}</p>
+                    <div class="domain-footer">
+                        <span class="domain-highlight-label">Featured Projects:</span>
+                        <span class="domain-projects-pill">{{ domain.exampleProjects }}</span>
+                        <div class="domain-click-hint" *ngIf="domainDetailsMap[domain.id]">
+                            <span>Explore Platform Showcase</span>
+                            <span class="hint-arrow">➔</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 2 for Continuous Seamless Loop -->
+                <div class="domain-card creamy-box" *ngFor="let domain of projectDomains" [style.--accent]="domain.accentColor" [class.clickable-domain]="!!domainDetailsMap[domain.id]" (click)="openDomainModal(domain)" aria-hidden="true">
+                    <div class="domain-card-header">
+                        <div class="domain-icon-badge">{{ domain.icon }}</div>
+                        <span class="domain-tag">{{ domain.badge }}</span>
+                    </div>
+                    <h3>{{ domain.name }}</h3>
+                    <div class="domain-tagline">{{ domain.tagline }}</div>
+                    <p>{{ domain.description }}</p>
+                    <div class="domain-footer">
+                        <span class="domain-highlight-label">Featured Projects:</span>
+                        <span class="domain-projects-pill">{{ domain.exampleProjects }}</span>
+                        <div class="domain-click-hint" *ngIf="domainDetailsMap[domain.id]">
+                            <span>Explore Platform Showcase</span>
+                            <span class="hint-arrow">➔</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 3 for Ultra-Wide Displays -->
+                <div class="domain-card creamy-box" *ngFor="let domain of projectDomains" [style.--accent]="domain.accentColor" [class.clickable-domain]="!!domainDetailsMap[domain.id]" (click)="openDomainModal(domain)" aria-hidden="true">
+                    <div class="domain-card-header">
+                        <div class="domain-icon-badge">{{ domain.icon }}</div>
+                        <span class="domain-tag">{{ domain.badge }}</span>
+                    </div>
+                    <h3>{{ domain.name }}</h3>
+                    <div class="domain-tagline">{{ domain.tagline }}</div>
+                    <p>{{ domain.description }}</p>
+                    <div class="domain-footer">
+                        <span class="domain-highlight-label">Featured Projects:</span>
+                        <span class="domain-projects-pill">{{ domain.exampleProjects }}</span>
+                        <div class="domain-click-hint" *ngIf="domainDetailsMap[domain.id]">
+                            <span>Explore Platform Showcase</span>
+                            <span class="hint-arrow">➔</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ================= HOW WE DESIGN AND DEVELOP SOFTWARE AT CHANDHU TECHNOLOGIES ================= -->
     <section class="lifecycle-section">
         <div class="section-title">
@@ -418,6 +489,42 @@
         </div>
     </section>
 
+
+    <!-- ================= TESTIMONIALS SECTION (ABOVE LEADERSHIP & EXPERTS) ================= -->
+    <section class="testimonials-section">
+        <div class="section-title">
+            <span class="section-tag">DIGITAL EXPERIENCES</span>
+            <h2>Digital Experiences We Created :</h2>
+            <p>Trusted by industry leaders and growing enterprises to build scalable software and intelligent solutions.</p>
+        </div>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card creamy-box" *ngFor="let item of testimonials" [style.--accent]="item.domainBadgeColor">
+                <div class="quote-watermark" [style.color]="item.domainBadgeColor">“</div>
+                
+                <div class="testimonial-header">
+                    <div class="client-avatar-badge" [style.borderColor]="item.domainBadgeColor">{{ item.avatar }}</div>
+                    <div class="client-rating">
+                        <span *ngFor="let s of [1,2,3,4,5]" class="star-icon">★</span>
+                    </div>
+                </div>
+
+                <p class="testimonial-quote">“{{ item.quote }}”</p>
+
+                <div class="testimonial-footer">
+                    <div class="client-info">
+                        <h4>{{ item.name }}</h4>
+                        <span class="client-role">{{ item.role }}</span>
+                        <span class="client-company">{{ item.company }}</span>
+                    </div>
+                    <span class="testimonial-domain-badge" [style.color]="item.domainBadgeColor" [style.borderColor]="item.domainBadgeColor">
+                        {{ item.domain }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ================= OUR TEAM & MANAGEMENT (LAST SECTION) ================= -->
     <section class="team-section">
         <div class="section-title">
@@ -502,3 +609,120 @@
     </div>
   </div>
 </div> -->
+
+<!-- ================= DOMAIN PROJECT SHOWCASE LIGHTBOX MODAL ================= -->
+<div class="domain-modal-overlay" *ngIf="selectedDomainDetail" (click)="closeDomainModal()">
+  <div class="domain-modal-content creamy-box" (click)="$event.stopPropagation()">
+    <button class="domain-modal-close" (click)="closeDomainModal()" aria-label="Close modal">✕</button>
+
+    <!-- Sub-Project Switcher Tabs (for Multi-Project Domains like Constructions) -->
+    <div class="modal-subproject-tabs" *ngIf="selectedDomainDetail.subProjects && selectedDomainDetail.subProjects.length > 0">
+      <button 
+        *ngFor="let sp of selectedDomainDetail.subProjects; let i = index" 
+        class="subproject-tab-btn" 
+        [class.active]="activeSubProjectIndex === i"
+        (click)="switchSubProject(i)">
+        {{ sp.badge }}
+      </button>
+    </div>
+
+    <!-- Modal Header -->
+    <div class="domain-modal-header" *ngIf="currentSubProject as cur">
+      <div class="domain-modal-badges">
+        <span class="badge-tag">{{ cur.badge }}</span>
+        <span class="badge-org">{{ cur.organization }}</span>
+      </div>
+      <h2 class="domain-modal-title">{{ cur.title }}</h2>
+      <p class="domain-modal-subtitle">{{ cur.tagline }}</p>
+      <div class="domain-modal-link-wrap" *ngIf="cur.websiteUrl">
+        <a [href]="cur.websiteUrl" target="_blank" rel="noopener noreferrer" class="domain-live-btn">
+          <span>🌐 Visit {{ cur.websiteLabel || 'Website' }}</span>
+          <span class="ext-arrow">↗</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Image Gallery Carousel -->
+    <div class="domain-gallery-container" *ngIf="currentSubProject && currentSubProject.images && currentSubProject.images.length > 0">
+      <div class="domain-gallery-main">
+        <img
+          [src]="currentSubProject.images[activeDomainImageIndex]"
+          [alt]="currentSubProject.title"
+          class="domain-gallery-img">
+
+        <div class="domain-gallery-nav" *ngIf="currentSubProject.images.length > 1">
+          <button (click)="prevDomainImage($event)" class="gallery-arrow prev-btn" aria-label="Previous image">◀</button>
+          <button (click)="nextDomainImage($event)" class="gallery-arrow next-btn" aria-label="Next image">▶</button>
+        </div>
+
+        <div class="gallery-caption" *ngIf="currentSubProject.imageCaptions && currentSubProject.imageCaptions[activeDomainImageIndex]">
+          {{ currentSubProject.imageCaptions[activeDomainImageIndex] }}
+        </div>
+        <div class="gallery-counter">
+          {{ activeDomainImageIndex + 1 }} / {{ currentSubProject.images.length }}
+        </div>
+      </div>
+
+      <!-- Thumbnail Strip -->
+      <div class="domain-gallery-thumbs" *ngIf="currentSubProject.images.length > 1">
+        <div
+          *ngFor="let img of currentSubProject.images; let idx = index"
+          class="thumb-item"
+          [class.active]="activeDomainImageIndex === idx"
+          (click)="selectDomainImage(idx, $event)">
+          <img [src]="img" [alt]="'Thumbnail ' + (idx + 1)">
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Sections -->
+    <div class="domain-modal-body" *ngIf="currentSubProject as cur">
+      <!-- Section: Overview -->
+      <div class="domain-info-block" *ngIf="cur.overview && cur.overview.length > 0">
+        <h3 class="block-title">
+          <span class="block-icon">📖</span> Platform Overview
+        </h3>
+        <p *ngFor="let para of cur.overview" class="overview-para">
+          {{ para }}
+        </p>
+      </div>
+
+      <!-- Section: Key Features -->
+      <div class="domain-info-block" *ngIf="cur.keyFeatures && cur.keyFeatures.length > 0">
+        <h3 class="block-title">
+          <span class="block-icon">⚡</span> Key Features
+        </h3>
+        <div class="features-grid">
+          <div class="feature-card" *ngFor="let feat of cur.keyFeatures">
+            <div class="feature-bullet">✦</div>
+            <div class="feature-text">
+              <strong>{{ feat.title }}:</strong> {{ feat.desc }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section: Our Vision -->
+      <div class="domain-info-block vision-box" *ngIf="cur.vision">
+        <h3 class="block-title">
+          <span class="block-icon">🌟</span> Our Vision
+        </h3>
+        <p class="vision-quote">
+          “{{ cur.vision }}”
+        </p>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="domain-modal-footer">
+        <div class="footer-tagline" *ngIf="cur.footerNote">
+          {{ cur.footerNote }}
+        </div>
+        <div class="footer-website-link" *ngIf="cur.websiteUrl">
+          <a [href]="cur.websiteUrl" target="_blank" rel="noopener noreferrer" class="domain-visit-link">
+            🔗 {{ cur.websiteLabel || 'Website' }} ↗
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

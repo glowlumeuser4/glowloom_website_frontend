@@ -27,8 +27,8 @@ export class AboutComponent {
   managementList: MemberProfile[] = [
     {
       id: 'chandhu',
-      name: 'Chandhu.V',
-      role: 'Founder & CEO',
+      name: 'Chandrakanth Jain',
+      role: 'CEO & Director',
       title: 'Application Designer & Architect',
       photoUrl: 'assets/chandhu.jpg',
       iconClass: 'founder-box',

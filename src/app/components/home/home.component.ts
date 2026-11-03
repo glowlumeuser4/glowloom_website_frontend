@@ -36,6 +36,67 @@ export interface SolutionItem {
   imageSrc: string;
 }
 
+
+
+
+export interface SubProjectItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  badge: string;
+  tagline: string;
+  organization: string;
+  websiteUrl?: string;
+  websiteLabel?: string;
+  overview: string[];
+  keyFeatures: { title: string; desc: string }[];
+  vision: string;
+  footerNote: string;
+  images: string[];
+  imageCaptions?: string[];
+}
+
+export interface DomainProjectDetail {
+  id: string;
+  title: string;
+  badge: string;
+  tagline: string;
+  organization: string;
+  websiteUrl?: string;
+  websiteLabel?: string;
+  overview: string[];
+  keyFeatures: { title: string; desc: string }[];
+  vision: string;
+  footerNote: string;
+  images: string[];
+  imageCaptions?: string[];
+  subProjects?: SubProjectItem[];
+}
+
+export interface ProjectDomain {
+  id: string;
+  name: string;
+  icon: string;
+  tagline: string;
+  description: string;
+  accentColor: string;
+  badge: string;
+  exampleProjects: string;
+}
+
+
+export interface TestimonialItem {
+  id: number;
+  name: string;
+  role: string;
+  company: string;
+  avatar: string;
+  rating: number;
+  quote: string;
+  domain: string;
+  domainBadgeColor: string;
+}
+
 export interface MemberProfile {
   id: string;
   name: string;
@@ -163,6 +224,271 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   activeSolutionId = 'ai';
 
+  // Domain Project Details State
+  selectedDomainDetail: DomainProjectDetail | null = null;
+  activeDomainImageIndex = 0;
+  activeSubProjectIndex = 0;
+
+  get currentSubProject(): SubProjectItem | DomainProjectDetail {
+    if (this.selectedDomainDetail?.subProjects && this.selectedDomainDetail.subProjects.length > 0) {
+      return this.selectedDomainDetail.subProjects[this.activeSubProjectIndex] || this.selectedDomainDetail.subProjects[0];
+    }
+    return this.selectedDomainDetail!;
+  }
+
+  switchSubProject(index: number): void {
+    this.activeSubProjectIndex = index;
+    this.activeDomainImageIndex = 0;
+  }
+
+
+    domainDetailsMap: { [key: string]: DomainProjectDetail } = {
+    agriculture: {
+      id: 'agriculture',
+      title: 'Dhriti Mart – Digital Agriculture Marketplace',
+      badge: '🌾 AgriTech & Smart Farming',
+      tagline: 'Empowering Agriculture Through Technology',
+      organization: 'A Project by Chandhu Tech',
+      overview: [
+        'Dhriti Mart is an agriculture-focused digital marketplace designed to simplify the way businesses purchase and manage agricultural products. With a primary focus on B2B commerce, the platform provides a streamlined digital experience for agricultural product sales, including fertilizers and other farming essentials.',
+        'Developed by Chandhu Tech, Dhriti Mart aims to make agricultural commerce more organized, accessible, and efficient through technology. The platform focuses on simplifying product discovery, improving order management, and supporting smoother business operations.',
+        'Designed with future growth in mind, Dhriti Mart has the potential to expand into B2C commerce, connecting directly with individual farmers and a wider customer base.'
+      ],
+      keyFeatures: [
+        { title: 'B2B Marketplace', desc: 'A digital platform for agricultural product procurement.' },
+        { title: 'Product Management', desc: 'Organized management and presentation of agricultural products.' },
+        { title: 'Order Management', desc: 'Structured workflows for handling business orders.' },
+        { title: 'User-Friendly Experience', desc: 'Simple and accessible product discovery and purchasing.' },
+        { title: 'Scalable Architecture', desc: 'A foundation for future business growth and B2C expansion.' }
+      ],
+      vision: 'To modernize agricultural commerce by combining technology, accessibility, and efficient business processes into one digital ecosystem.',
+      footerNote: 'Dhriti Mart — Empowering Agriculture Through Technology. Conceptualized and developed by Chandhu Tech.',
+      images: [
+        'assets/dhriti-mart-offer.png',
+        'assets/dhriti-mart-smart-tools.png',
+        'assets/dhriti-mart-organic.png'
+      ]
+    },
+    travel: {
+      id: 'travel',
+      title: 'Gokarna Rentals – Travel & Rental Booking Platform',
+      badge: '✈️ Tourism & Travel Systems',
+      tagline: 'Explore More, Worry Less • Designed & Developed by Chandhu Tech',
+      organization: 'A Project by Chandhu Tech',
+      websiteUrl: 'https://gokaranarentals.com',
+      websiteLabel: 'Gokaranarentals.com',
+      overview: [
+        'Gokarna Rentals is an online booking platform designed to make exploring Gokarna easier and more convenient for travelers. The platform brings together bike and scooter rentals, accommodation bookings, and boating experiences in one place, helping users plan their trips with ease.',
+        'Developed by Chandhu Tech, Gokarna Rentals transforms traditional rental services into a digital booking experience, allowing travelers to explore available services and plan their experiences more conveniently.',
+        'The platform focuses on simplifying the travel planning process, improving booking accessibility, and creating a seamless experience for visitors exploring Gokarna.'
+      ],
+      keyFeatures: [
+        { title: 'Bike & Scooter Rentals', desc: 'Convenient online booking for two-wheelers.' },
+        { title: 'Accommodation Booking', desc: 'Explore and book rooms and stays.' },
+        { title: 'Boating Experiences', desc: 'Access boating options for memorable travel experiences.' },
+        { title: 'Combined Packages', desc: 'Options to combine rentals, stays, and boating into one experience.' },
+        { title: 'Online Booking', desc: 'A centralized platform for convenient trip planning.' },
+        { title: 'Advance Payments', desc: 'A structured advance-payment process to support reservations.' }
+      ],
+      vision: 'To simplify travel experiences through technology by bringing essential rental and tourism services together on one convenient digital platform.',
+      footerNote: 'Gokarna Rentals — Explore More, Worry Less. Designed and developed by Chandhu Tech.',
+      images: [
+        'assets/mobile-solution.jpg',
+        'assets/web-solution.jpg'
+      ]
+    },
+    construction: {
+      id: 'construction',
+      title: 'Construction Business & Management Systems',
+      badge: '🏗️ Construction & Architecture',
+      tagline: 'Building Smarter. Managing Better. • A Project by Chandhu Tech',
+      organization: 'A Project by Chandhu Tech',
+      overview: [],
+      keyFeatures: [],
+      vision: '',
+      footerNote: 'Designed and developed by Chandhu Tech.',
+      images: [
+        'assets/buildpro-construction-crm.jpg'
+      ],
+      subProjects: [
+        {
+          id: 'crm',
+          title: 'Construction CRM – Construction Management & Business Operations System',
+          subtitle: 'A Project by Chandhu Tech',
+          badge: '🏗️ Construction CRM (BuildPro)',
+          tagline: 'Building Smarter. Managing Better.',
+          organization: 'A Project by Chandhu Tech',
+          overview: [
+            'The Construction CRM is a centralized digital solution designed to help construction companies manage client enquiries, projects, site activities, and workforce operations through a single platform.',
+            'Developed by Chandhu Tech, the system helps construction businesses organize their sales pipeline, maintain client information, track project progress, schedule site visits, and manage daily tasks. It provides a structured way to monitor ongoing projects and coordinate activities between office teams and on-site personnel.',
+            'By bringing essential business workflows into one system, the platform aims to reduce manual administration, improve project visibility, and support efficient decision-making.'
+          ],
+          keyFeatures: [
+            { title: 'Lead & Enquiry Management', desc: 'Track potential clients, incoming enquiries, and follow-ups.' },
+            { title: 'Client Management', desc: 'Maintain organized client details and communication records.' },
+            { title: 'Project Management', desc: 'Monitor ongoing, completed, and planned construction projects.' },
+            { title: 'Site Visit Scheduling', desc: 'Organize site inspections, client visits, and appointments.' },
+            { title: 'Task Management', desc: 'Assign tasks and track their completion.' },
+            { title: 'Team & Attendance Management', desc: 'Maintain employee records and monitor attendance.' },
+            { title: 'Project Status Tracking', desc: 'View project progress and identify pending activities.' },
+            { title: 'Dashboard & Reports', desc: 'Access business summaries, project statistics, and operational insights.' }
+          ],
+          vision: 'To simplify construction business operations through technology, enabling companies to manage projects, coordinate teams, and build stronger client relationships through one organized digital platform.',
+          footerNote: 'Building Smarter. Managing Better. Designed and developed by Chandhu Tech.',
+          images: [
+            'assets/buildpro-construction-crm.jpg'
+          ]
+        },
+        {
+          id: 'website',
+          title: 'Construction Company Website – Digital Business Platform',
+          subtitle: 'A Project by Chandhu Tech',
+          badge: '🏢 Company Website Platform',
+          tagline: 'Building Digital Foundations for Construction Businesses',
+          organization: 'A Project by Chandhu Tech',
+          overview: [
+            'The Construction Company Website is a digital platform designed to establish a strong online presence for a construction business. The website showcases the company’s services, projects, expertise, and capabilities, helping potential clients understand its work and build confidence in its offerings.',
+            'Developed by Chandhu Tech, the platform focuses on presenting construction services through a professional and user-friendly digital experience. It enables visitors to explore completed and ongoing projects, learn about the company’s capabilities, and connect with the team for business enquiries.',
+            'The website aims to strengthen the company’s digital identity, improve service visibility, and create new opportunities to connect with prospective clients.'
+          ],
+          keyFeatures: [
+            { title: 'Company Profile', desc: 'A professional overview of the company’s background, expertise, and capabilities.' },
+            { title: 'Services Showcase', desc: 'Clear presentation of construction services and solutions.' },
+            { title: 'Project Portfolio', desc: 'Display of completed and ongoing construction projects.' },
+            { title: 'Enquiry Management', desc: 'Convenient ways for potential clients to contact the company.' },
+            { title: 'Responsive Design', desc: 'An accessible browsing experience across mobile, tablet, and desktop devices.' },
+            { title: 'Digital Brand Presence', desc: 'A professional online identity that builds credibility and visibility.' }
+          ],
+          vision: 'To empower construction businesses with a professional digital presence that showcases their expertise, builds trust, and connects them with new opportunities.',
+          footerNote: 'Building Digital Foundations for Construction Businesses. Designed and developed by Chandhu Tech.',
+          images: [
+            'assets/web-solution.jpg',
+            'assets/dev-workspace-3d.jpg'
+          ]
+        }
+      ]
+    },
+    healthcare: {
+      id: 'healthcare',
+      title: 'Hospital CRM – Hospital Operations & Management System',
+      badge: '🏥 HealthTech & Hospital CRM',
+      tagline: 'Smarter Hospital Operations. Better Healthcare Management.',
+      organization: 'A Project by Chandhu Tech',
+      overview: [
+        'The Hospital CRM is a centralized hospital management solution designed to streamline daily hospital operations, monitor doctor and staff attendance, and maintain organized patient treatment records.',
+        'Developed by Chandhu Tech, the system enables hospitals to track patient enquiries, manage appointments, record doctor consultations, monitor staff attendance, and maintain detailed records of patients treated by individual doctors. It also provides visibility into the number of patients attended by each doctor and staff members assigned to patient rooms.',
+        'By bringing essential hospital workflows into one digital platform, the system helps improve operational transparency, simplify record management, and support better coordination between doctors, staff, and hospital administration.'
+      ],
+      keyFeatures: [
+        { title: 'Patient Enquiry Management', desc: 'Record and track patient enquiries.' },
+        { title: 'Appointment Management', desc: 'Organize patient appointments and consultation schedules.' },
+        { title: 'Doctor Attendance', desc: 'Monitor doctor attendance and availability.' },
+        { title: 'Staff Attendance', desc: 'Track hospital staff attendance and working schedules.' },
+        { title: 'Patient Treatment Records', desc: 'Maintain records of patients treated by doctors.' },
+        { title: 'Doctor-wise Patient History', desc: 'Access treatment records associated with a particular doctor.' },
+        { title: 'Doctor Performance Tracking', desc: 'View the number of patients attended by each doctor.' },
+        { title: 'Room-wise Staff Monitoring', desc: 'Track staff assigned to rooms and their attendance to patients.' },
+        { title: 'Centralized Records', desc: 'Keep essential patient and operational information organized in one system.' },
+        { title: 'Administrative Reporting', desc: 'Support hospital management with attendance summaries, patient statistics, and operational reports.' }
+      ],
+      vision: 'To simplify hospital administration through technology by providing a centralised platform that improves operational visibility, supports efficient staff coordination, and organises patient care records.',
+      footerNote: 'Smarter Hospital Operations. Better Healthcare Management. Designed and developed by Chandhu Tech.',
+      images: [
+        'assets/hospital-crm-dashboard.png',
+        'assets/hospital-crm-enquiries.png',
+        'assets/hospital-crm-doctor-records.png',
+        'assets/hospital-crm-staff-allocation.png'
+      ],
+      imageCaptions: [
+        'Hospital CRM — Operations Dashboard',
+        'Hospital CRM — Patient Enquiries Management',
+        'Hospital CRM — Doctor-wise Patient Treatment Records',
+        'Hospital CRM — Staff Attendance & Room Allocation'
+      ]
+    }
+  };
+
+  openDomainModal(domain: ProjectDomain): void {
+    if (this.domainDetailsMap[domain.id]) {
+      this.selectedDomainDetail = this.domainDetailsMap[domain.id];
+      this.activeDomainImageIndex = 0;
+      this.activeSubProjectIndex = 0;
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  closeDomainModal(): void {
+    this.selectedDomainDetail = null;
+    document.body.style.overflow = '';
+  }
+
+  nextDomainImage(event: Event): void {
+    event.stopPropagation();
+    const cur = this.currentSubProject;
+    if (cur && cur.images && cur.images.length > 1) {
+      this.activeDomainImageIndex = (this.activeDomainImageIndex + 1) % cur.images.length;
+    }
+  }
+
+  prevDomainImage(event: Event): void {
+    event.stopPropagation();
+    const cur = this.currentSubProject;
+    if (cur && cur.images && cur.images.length > 1) {
+      this.activeDomainImageIndex = (this.activeDomainImageIndex - 1 + cur.images.length) % cur.images.length;
+    }
+  }
+
+  selectDomainImage(index: number, event: Event): void {
+    event.stopPropagation();
+    this.activeDomainImageIndex = index;
+  }
+
+
+  // Project Domains (Agriculture, Tours & Travels, Healthcare, Constructions)
+  projectDomains: ProjectDomain[] = [
+    {
+      id: 'agriculture',
+      name: 'Agriculture',
+      icon: '🌾',
+      tagline: 'AgriTech & Smart Farming',
+      description: 'Crop health diagnostics, agricultural supply-chain e-commerce, real-time farm telemetry & farmer advisory platforms.',
+      accentColor: '#10b981',
+      badge: 'AgriTech',
+      exampleProjects: 'Dhriti Mart • CropCure AI'
+    },
+    {
+      id: 'travel',
+      name: 'Tours and Travels',
+      icon: '✈️',
+      tagline: 'Tourism & Travel Systems',
+      description: 'Dynamic tour package bookings, real-time travel telemetry, ticketing gateways, hotel reservation & GPS itineraries.',
+      accentColor: '#0ea5e9',
+      badge: 'TravelTech',
+      exampleProjects: 'Gokarna Rentals • Takeatrip'
+    },
+    {
+      id: 'healthcare',
+      name: 'Healthcare',
+      icon: '🏥',
+      tagline: 'HealthTech & MedTech',
+      description: 'Hospital staff workforce management, patient electronic health records (EHR), biometric verification & doctor appointments.',
+      accentColor: '#f43f5e',
+      badge: 'MedTech',
+      exampleProjects: 'Hospital CRM • Operations & Staff Portal'
+    },
+    {
+      id: 'construction',
+      name: 'Constructions',
+      icon: '🏗️',
+      tagline: 'Construction & Architecture',
+      description: 'Architectural enterprise platforms, material quantity takeoff estimation, contractor management & job-site monitoring.',
+      accentColor: '#f59e0b',
+      badge: 'BuildTech',
+      exampleProjects: 'Construction CRM (BuildPro) • Company Website'
+    }
+  ];
+
+
   // Contact Form State
   formData = {
     user_first_name: '',
@@ -178,11 +504,60 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   // Team & Management State
   selectedMember: MemberProfile | null = null;
 
+    // Client Testimonials
+  testimonials: TestimonialItem[] = [
+    {
+      id: 1,
+      name: 'Dhriti Mart Team',
+      role: 'Agri-Business Founder',
+      company: 'Dhriti Mart',
+      avatar: '🌾',
+      rating: 5,
+      quote: 'Chandhu Tech understood our vision and transformed it into a practical digital platform for our agricultural business. We appreciate their dedication, professionalism, and commitment to delivering a quality solution for Dhriti Mart.',
+      domain: 'Agriculture & AgriTech',
+      domainBadgeColor: '#10b981'
+    },
+    {
+      id: 2,
+      name: 'Gokarna Rentals Team',
+      role: 'Fleet & Tourism Operations',
+      company: 'Gokarna Rentals',
+      avatar: '🏖️',
+      rating: 5,
+      quote: 'Working with Chandhu Tech has been a great experience. They transformed our traditional rental business into a convenient online booking platform. We appreciate their dedication, professional approach, and commitment to bringing Gokarna Rentals online.',
+      domain: 'Tours & Vehicle Rentals',
+      domainBadgeColor: '#0ea5e9'
+    },
+    {
+      id: 3,
+      name: 'Healthcare Administration',
+      role: 'Hospital Operations Director',
+      company: 'Apex Health Systems',
+      avatar: '🏥',
+      rating: 5,
+      quote: 'We appreciate Chandhu Tech for their professionalism, dedication, and quality of work. Their team has been supportive throughout the process, and we are happy with their commitment and approach.',
+      domain: 'Healthcare & Workforce',
+      domainBadgeColor: '#f43f5e'
+    },
+    {
+      id: 4,
+      name: 'Enterprise Cloud Labs',
+      role: 'Head of Digital Transformation',
+      company: 'Nova Enterprise Solutions',
+      avatar: '🚀',
+      rating: 5,
+      quote: 'Working with Chandhu Tech has been a positive experience. Their professionalism, innovative approach, and commitment to quality truly stand out. We appreciate their dedication and look forward to working together on future projects.',
+      domain: 'AI & Enterprise Software',
+      domainBadgeColor: '#8b5cf6'
+    }
+  ];
+
+
   managementList: MemberProfile[] = [
     {
       id: 'chandhu',
-      name: 'Chandhu.V',
-      role: 'Founder & CEO',
+      name: 'Chandrakanth Jain',
+      role: 'CEO & Director',
       title: 'Application Designer & Architect',
       photoUrl: 'assets/chandhu.jpg',
       iconClass: 'founder-box',
