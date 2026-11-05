@@ -269,14 +269,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
         'assets/dhriti-mart-organic.png'
       ]
     },
-    travel: {
+        travel: {
       id: 'travel',
       title: 'Gokarna Rentals – Travel & Rental Booking Platform',
       badge: '✈️ Tourism & Travel Systems',
       tagline: 'Explore More, Worry Less • Designed & Developed by Chandhu Tech',
       organization: 'A Project by Chandhu Tech',
-      websiteUrl: 'https://gokaranarentals.com',
-      websiteLabel: 'Gokaranarentals.com',
+      websiteUrl: 'https://www.gokarnarentals.com/',
+      websiteLabel: 'RideGokarna | Bike & Scooter Rentals in Gokarna',
       overview: [
         'Gokarna Rentals is an online booking platform designed to make exploring Gokarna easier and more convenient for travelers. The platform brings together bike and scooter rentals, accommodation bookings, and boating experiences in one place, helping users plan their trips with ease.',
         'Developed by Chandhu Tech, Gokarna Rentals transforms traditional rental services into a digital booking experience, allowing travelers to explore available services and plan their experiences more conveniently.',
@@ -293,8 +293,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       vision: 'To simplify travel experiences through technology by bringing essential rental and tourism services together on one convenient digital platform.',
       footerNote: 'Gokarna Rentals — Explore More, Worry Less. Designed and developed by Chandhu Tech.',
       images: [
-        'assets/mobile-solution.jpg',
-        'assets/web-solution.jpg'
+        'assets/gokarna-rentals-hero.jpg',
+        'assets/gokarna-rentals-services.jpg',
+        'assets/gokarna-rentals-fleet.jpg',
+        'assets/gokarna-rentals-packages.jpg',
+        'assets/gokarna-rentals-roadtrips.jpg'
+      ],
+      imageCaptions: [
+        'Gokarna Rentals — Rent a Bike Search & Booking Engine',
+        'Gokarna Rentals — Core Services & Package Bundles',
+        'Gokarna Rentals — Verified Bike & Scooter Fleet',
+        'Gokarna Rentals — Tour Packages & Beach Water Sports',
+        'Gokarna Rentals — Curated Scenic Road Trips Guide'
       ]
     },
     construction: {
