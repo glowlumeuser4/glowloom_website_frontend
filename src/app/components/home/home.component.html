@@ -86,65 +86,116 @@
             <p>Proven enterprise software, cloud portals, and AI systems engineered across core global industries.</p>
         </div>
 
-        <div class="marquee-wrapper">
-            <div class="marquee-track">
-                <!-- Group 1 -->
-                <div class="domain-card creamy-box" *ngFor="let domain of projectDomains" [style.--accent]="domain.accentColor" [class.clickable-domain]="!!domainDetailsMap[domain.id]" (click)="openDomainModal(domain)">
-                    <div class="domain-card-header">
-                        <div class="domain-icon-badge">{{ domain.icon }}</div>
-                        <span class="domain-tag">{{ domain.badge }}</span>
-                    </div>
-                    <h3>{{ domain.name }}</h3>
-                    <div class="domain-tagline">{{ domain.tagline }}</div>
-                    <p>{{ domain.description }}</p>
-                    <div class="domain-footer">
-                        <span class="domain-highlight-label">Featured Projects:</span>
-                        <span class="domain-projects-pill">{{ domain.exampleProjects }}</span>
-                        <div class="domain-click-hint" *ngIf="domainDetailsMap[domain.id]">
-                            <span>Explore Platform Showcase</span>
-                            <span class="hint-arrow">➔</span>
+        <div class="marquee-controls-container">
+            <!-- Left Navigation Button -->
+            <button class="domain-nav-btn prev-btn" (click)="scrollDomains('left', $event)" aria-label="Previous industry domains">
+                ‹
+            </button>
+
+            <!-- Interactive Swipeable & Auto-Rotating Marquee Wrapper -->
+            <div class="marquee-wrapper"
+                 [class.is-dragging]="isMarqueeDragging"
+                 (mousedown)="onMarqueeMouseDown($event)"
+                 (mousemove)="onMarqueeMouseMove($event)"
+                 (mouseup)="onMarqueeMouseUp()"
+                 (mouseenter)="onMarqueeMouseEnter()"
+                 (mouseleave)="onMarqueeMouseLeave()"
+                 (touchstart)="onMarqueeTouchStart($event)"
+                 (touchmove)="onMarqueeTouchMove($event)"
+                 (touchend)="onMarqueeTouchEnd()">
+
+                <div class="marquee-track interactive-track"
+                     [style.transform]="'translate3d(' + marqueeTranslateX + 'px, 0, 0)'">
+
+                    <!-- Group 1 -->
+                    <div class="domain-card creamy-box" *ngFor="let domain of projectDomains" [style.--accent]="domain.accentColor" [class.clickable-domain]="!!domainDetailsMap[domain.id]" (click)="openDomainModal(domain)">
+                        <div class="domain-card-header">
+                            <div class="domain-icon-badge">{{ domain.icon }}</div>
+                            <span class="domain-tag">{{ domain.badge }}</span>
+                        </div>
+                        <h3>{{ domain.name }}</h3>
+                        <div class="domain-tagline">{{ domain.tagline }}</div>
+                        <p>{{ domain.description }}</p>
+                        <div class="domain-footer">
+                            <span class="domain-highlight-label">Featured Projects:</span>
+                            <span class="domain-projects-pill">{{ domain.exampleProjects }}</span>
+                            <div class="domain-click-hint" *ngIf="domainDetailsMap[domain.id]">
+                                <span>Explore Platform Showcase</span>
+                                <span class="hint-arrow">➔</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Group 2 for Continuous Seamless Loop -->
-                <div class="domain-card creamy-box" *ngFor="let domain of projectDomains" [style.--accent]="domain.accentColor" [class.clickable-domain]="!!domainDetailsMap[domain.id]" (click)="openDomainModal(domain)" aria-hidden="true">
-                    <div class="domain-card-header">
-                        <div class="domain-icon-badge">{{ domain.icon }}</div>
-                        <span class="domain-tag">{{ domain.badge }}</span>
-                    </div>
-                    <h3>{{ domain.name }}</h3>
-                    <div class="domain-tagline">{{ domain.tagline }}</div>
-                    <p>{{ domain.description }}</p>
-                    <div class="domain-footer">
-                        <span class="domain-highlight-label">Featured Projects:</span>
-                        <span class="domain-projects-pill">{{ domain.exampleProjects }}</span>
-                        <div class="domain-click-hint" *ngIf="domainDetailsMap[domain.id]">
-                            <span>Explore Platform Showcase</span>
-                            <span class="hint-arrow">➔</span>
+                    <!-- Group 2 for Continuous Seamless Loop -->
+                    <div class="domain-card creamy-box" *ngFor="let domain of projectDomains" [style.--accent]="domain.accentColor" [class.clickable-domain]="!!domainDetailsMap[domain.id]" (click)="openDomainModal(domain)">
+                        <div class="domain-card-header">
+                            <div class="domain-icon-badge">{{ domain.icon }}</div>
+                            <span class="domain-tag">{{ domain.badge }}</span>
+                        </div>
+                        <h3>{{ domain.name }}</h3>
+                        <div class="domain-tagline">{{ domain.tagline }}</div>
+                        <p>{{ domain.description }}</p>
+                        <div class="domain-footer">
+                            <span class="domain-highlight-label">Featured Projects:</span>
+                            <span class="domain-projects-pill">{{ domain.exampleProjects }}</span>
+                            <div class="domain-click-hint" *ngIf="domainDetailsMap[domain.id]">
+                                <span>Explore Platform Showcase</span>
+                                <span class="hint-arrow">➔</span>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Group 3 for Ultra-Wide Displays -->
-                <div class="domain-card creamy-box" *ngFor="let domain of projectDomains" [style.--accent]="domain.accentColor" [class.clickable-domain]="!!domainDetailsMap[domain.id]" (click)="openDomainModal(domain)" aria-hidden="true">
-                    <div class="domain-card-header">
-                        <div class="domain-icon-badge">{{ domain.icon }}</div>
-                        <span class="domain-tag">{{ domain.badge }}</span>
+                    <!-- Group 3 for Continuous Seamless Loop -->
+                    <div class="domain-card creamy-box" *ngFor="let domain of projectDomains" [style.--accent]="domain.accentColor" [class.clickable-domain]="!!domainDetailsMap[domain.id]" (click)="openDomainModal(domain)">
+                        <div class="domain-card-header">
+                            <div class="domain-icon-badge">{{ domain.icon }}</div>
+                            <span class="domain-tag">{{ domain.badge }}</span>
+                        </div>
+                        <h3>{{ domain.name }}</h3>
+                        <div class="domain-tagline">{{ domain.tagline }}</div>
+                        <p>{{ domain.description }}</p>
+                        <div class="domain-footer">
+                            <span class="domain-highlight-label">Featured Projects:</span>
+                            <span class="domain-projects-pill">{{ domain.exampleProjects }}</span>
+                            <div class="domain-click-hint" *ngIf="domainDetailsMap[domain.id]">
+                                <span>Explore Platform Showcase</span>
+                                <span class="hint-arrow">➔</span>
+                            </div>
+                        </div>
                     </div>
-                    <h3>{{ domain.name }}</h3>
-                    <div class="domain-tagline">{{ domain.tagline }}</div>
-                    <p>{{ domain.description }}</p>
-                    <div class="domain-footer">
-                        <span class="domain-highlight-label">Featured Projects:</span>
-                        <span class="domain-projects-pill">{{ domain.exampleProjects }}</span>
-                        <div class="domain-click-hint" *ngIf="domainDetailsMap[domain.id]">
-                            <span>Explore Platform Showcase</span>
-                            <span class="hint-arrow">➔</span>
+
+                    <!-- Group 4 for Ultra-Wide Displays -->
+                    <div class="domain-card creamy-box" *ngFor="let domain of projectDomains" [style.--accent]="domain.accentColor" [class.clickable-domain]="!!domainDetailsMap[domain.id]" (click)="openDomainModal(domain)">
+                        <div class="domain-card-header">
+                            <div class="domain-icon-badge">{{ domain.icon }}</div>
+                            <span class="domain-tag">{{ domain.badge }}</span>
+                        </div>
+                        <h3>{{ domain.name }}</h3>
+                        <div class="domain-tagline">{{ domain.tagline }}</div>
+                        <p>{{ domain.description }}</p>
+                        <div class="domain-footer">
+                            <span class="domain-highlight-label">Featured Projects:</span>
+                            <span class="domain-projects-pill">{{ domain.exampleProjects }}</span>
+                            <div class="domain-click-hint" *ngIf="domainDetailsMap[domain.id]">
+                                <span>Explore Platform Showcase</span>
+                                <span class="hint-arrow">➔</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Right Navigation Button -->
+            <button class="domain-nav-btn next-btn" (click)="scrollDomains('right', $event)" aria-label="Next industry domains">
+                ›
+            </button>
+        </div>
+
+        <!-- Touch / Drag Hint Indicator -->
+        <div class="domain-swipe-hint">
+            <span class="swipe-icon">👈</span>
+            <span>Swipe or drag left & right to browse</span>
+            <span class="swipe-icon">👉</span>
         </div>
     </section>
 

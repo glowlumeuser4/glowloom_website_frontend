@@ -38,8 +38,8 @@ export class AboutComponent {
     },
     {
       id: 'bharat',
-      name: 'Bharat.P.R.',
-      role: 'Co-Founder',
+      name: 'Bharat P R.',
+      role: 'CTO & Co-Founder',
       title: 'Backend Developer & Engineer',
       photoUrl: 'assets/bharat.jpg',
       iconClass: 'cofounder-box',

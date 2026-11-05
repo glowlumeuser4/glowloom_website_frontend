@@ -1870,6 +1870,68 @@ body.dark .creamy-box:hover {
    PROJECT DOMAINS TICKER (RIGHT TO LEFT)
 ========================================== */
 
+
+/* Interactive Marquee Controls & Navigation */
+.marquee-controls-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.domain-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  font-size: 28px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  user-select: none;
+  padding: 0;
+}
+
+.domain-nav-btn.prev-btn {
+  left: 14px;
+}
+
+.domain-nav-btn.next-btn {
+  right: 14px;
+}
+
+.domain-nav-btn:hover {
+  background: #f59e0b;
+  border-color: #f59e0b;
+  color: #0b1120;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.45);
+}
+
+.domain-swipe-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.4px;
+  user-select: none;
+}
+
 .domains-marquee-section {
   position: relative;
   margin-top: 50px;
@@ -1884,14 +1946,19 @@ body.dark .creamy-box:hover {
   padding: 16px 0;
   mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+  cursor: grab;
+  user-select: none;
+  touch-action: pan-y;
 }
 
 .marquee-track {
   display: flex;
   width: max-content;
   gap: 26px;
-  animation: scrollRightToLeft 32s linear infinite;
   will-change: transform;
+}
+.marquee-track.interactive-track {
+  animation: none !important;
 }
 
 .marquee-wrapper:hover .marquee-track {
@@ -2689,4 +2756,13 @@ body.dark .testimonial-domain-badge {
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
   z-index: 5;
   pointer-events: none;
+}
+
+.marquee-wrapper.is-dragging {
+  cursor: grabbing !important;
+}
+
+.domain-card {
+  user-select: none;
+  -webkit-user-drag: none;
 }

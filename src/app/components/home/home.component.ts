@@ -224,6 +224,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   activeSolutionId = 'ai';
 
+  // Interactive Project Domains Marquee State (Auto-Rotation & Touch/Swipe/Drag Support)
+  marqueeTranslateX = -1424;
+  marqueeOneSetWidth = 1424;
+  isMarqueeHovered = false;
+  isMarqueeDragging = false;
+  marqueeStartX = 0;
+  marqueeStartTranslate = 0;
+  hasMarqueeDragged = false;
+  marqueeResumeTimer: any;
+  private marqueeAnimFrameId: any;
+
+
   // Domain Project Details State
   selectedDomainDetail: DomainProjectDetail | null = null;
   activeDomainImageIndex = 0;
@@ -419,6 +431,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   };
 
   openDomainModal(domain: ProjectDomain): void {
+    if (this.hasMarqueeDragged) {
+      this.hasMarqueeDragged = false;
+      return;
+    }
     if (this.domainDetailsMap[domain.id]) {
       this.selectedDomainDetail = this.domainDetailsMap[domain.id];
       this.activeDomainImageIndex = 0;
@@ -577,8 +593,8 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     },
     {
       id: 'bharat',
-      name: 'Bharat.P.R.',
-      role: 'Co-Founder',
+      name: 'Bharat P R.',
+      role: 'CTO & Co-Founder',
       title: 'Backend Developer & Engineer',
       photoUrl: 'assets/bharat.jpg',
       iconClass: 'cofounder-box',
@@ -789,11 +805,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       this.resizeCanvas();
       this.render3DLoop();
     }
+    this.initMarqueeInteractivity();
   }
 
   ngOnDestroy() {
     this.stopAutoPlay();
     this.stopSolutionAutoPlay();
+    if (this.marqueeAnimFrameId) {
+      cancelAnimationFrame(this.marqueeAnimFrameId);
+    }
+    if (this.marqueeResumeTimer) {
+      clearTimeout(this.marqueeResumeTimer);
+    }
     if (this.animFrameId) {
       cancelAnimationFrame(this.animFrameId);
     }
@@ -801,6 +824,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @HostListener('window:resize')
   resizeCanvas() {
+    this.updateMarqueeOneSetWidth();
     if (this.canvasRef && this.canvasRef.nativeElement.parentElement) {
       const parent = this.canvasRef.nativeElement.parentElement;
       this.canvasRef.nativeElement.width = parent.clientWidth || 500;
@@ -1040,4 +1064,171 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   get currentSolution(): SolutionItem {
     return this.solutions.find(s => s.id === this.activeSolutionId) || this.solutions[0];
   }
+
+
+  // =========================================================================
+  // Key Industry Fields Marquee: Interactive Auto-Rotation & Touch/Swipe/Drag
+  // =========================================================================
+
+  initMarqueeInteractivity(): void {
+    this.updateMarqueeOneSetWidth();
+    // Start centered in the duplicated sets
+    if (this.marqueeTranslateX === 0 || this.marqueeTranslateX === -1424) {
+      this.marqueeTranslateX = -this.marqueeOneSetWidth;
+    }
+    this.startMarqueeAnimation();
+  }
+
+  updateMarqueeOneSetWidth(): void {
+    // 4 cards * (330px width + 26px gap) = 1424px
+    this.marqueeOneSetWidth = 1424;
+  }
+
+  private startMarqueeAnimation(): void {
+    if (this.marqueeAnimFrameId) {
+      cancelAnimationFrame(this.marqueeAnimFrameId);
+    }
+    const animate = () => {
+      // Auto-rotate leftwards when user is not hovering or dragging
+      if (!this.isMarqueeHovered && !this.isMarqueeDragging) {
+        this.marqueeTranslateX -= 0.85; // smooth 60fps auto-scroll speed
+        this.marqueeTranslateX = this.normalizeTranslate(this.marqueeTranslateX);
+      }
+      this.marqueeAnimFrameId = requestAnimationFrame(animate);
+    };
+    this.marqueeAnimFrameId = requestAnimationFrame(animate);
+  }
+
+  normalizeTranslate(val: number): number {
+    const minBound = -this.marqueeOneSetWidth * 2;
+    const maxBound = -this.marqueeOneSetWidth;
+    if (val <= minBound) {
+      val += this.marqueeOneSetWidth;
+    } else if (val >= 0) {
+      val -= this.marqueeOneSetWidth;
+    }
+    return val;
+  }
+
+  // --- Mouse Drag Events ---
+  onMarqueeMouseDown(e: MouseEvent): void {
+    this.isMarqueeDragging = true;
+    this.hasMarqueeDragged = false;
+    this.marqueeStartX = e.clientX;
+    this.marqueeStartTranslate = this.marqueeTranslateX;
+    if (this.marqueeResumeTimer) clearTimeout(this.marqueeResumeTimer);
+  }
+
+  onMarqueeMouseMove(e: MouseEvent): void {
+    if (!this.isMarqueeDragging) return;
+    const deltaX = e.clientX - this.marqueeStartX;
+    if (Math.abs(deltaX) > 6) {
+      this.hasMarqueeDragged = true;
+    }
+    this.marqueeTranslateX = this.normalizeTranslate(this.marqueeStartTranslate + deltaX);
+  }
+
+  onMarqueeMouseUp(): void {
+    if (this.isMarqueeDragging) {
+      this.isMarqueeDragging = false;
+      this.scheduleMarqueeResume();
+    }
+  }
+
+  onMarqueeMouseEnter(): void {
+    this.isMarqueeHovered = true;
+    if (this.marqueeResumeTimer) clearTimeout(this.marqueeResumeTimer);
+  }
+
+  onMarqueeMouseLeave(): void {
+    this.isMarqueeHovered = false;
+    if (this.isMarqueeDragging) {
+      this.isMarqueeDragging = false;
+    }
+    this.scheduleMarqueeResume();
+  }
+
+  // --- Touch Swipe Events for Mobile & Tablet ---
+  onMarqueeTouchStart(e: TouchEvent): void {
+    if (e.touches && e.touches.length > 0) {
+      this.isMarqueeDragging = true;
+      this.hasMarqueeDragged = false;
+      this.marqueeStartX = e.touches[0].clientX;
+      this.marqueeStartTranslate = this.marqueeTranslateX;
+      if (this.marqueeResumeTimer) clearTimeout(this.marqueeResumeTimer);
+    }
+  }
+
+  onMarqueeTouchMove(e: TouchEvent): void {
+    if (!this.isMarqueeDragging || !e.touches || e.touches.length === 0) return;
+    const deltaX = e.touches[0].clientX - this.marqueeStartX;
+    if (Math.abs(deltaX) > 6) {
+      this.hasMarqueeDragged = true;
+    }
+    this.marqueeTranslateX = this.normalizeTranslate(this.marqueeStartTranslate + deltaX);
+  }
+
+  onMarqueeTouchEnd(): void {
+    if (this.isMarqueeDragging) {
+      this.isMarqueeDragging = false;
+      this.scheduleMarqueeResume();
+    }
+  }
+
+  @HostListener('window:mouseup')
+  onWindowMouseUp(): void {
+    if (this.isMarqueeDragging) {
+      this.isMarqueeDragging = false;
+      this.scheduleMarqueeResume();
+    }
+  }
+
+  @HostListener('window:touchend')
+  onWindowTouchEnd(): void {
+    if (this.isMarqueeDragging) {
+      this.isMarqueeDragging = false;
+      this.scheduleMarqueeResume();
+    }
+  }
+
+  // --- Left & Right Arrow Navigation Buttons ---
+  scrollDomains(direction: 'left' | 'right', event?: Event): void {
+    if (event) event.stopPropagation();
+    if (this.marqueeResumeTimer) clearTimeout(this.marqueeResumeTimer);
+    this.isMarqueeHovered = true;
+
+    const step = 356; // 330px card + 26px gap
+    const delta = direction === 'left' ? step : -step;
+    this.smoothScrollMarquee(delta);
+    this.scheduleMarqueeResume(3500);
+  }
+
+  private smoothScrollMarquee(delta: number): void {
+    const startTranslate = this.marqueeTranslateX;
+    const targetTranslate = startTranslate + delta;
+    const duration = 320;
+    const startTime = performance.now();
+
+    const animateStep = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(1, elapsed / duration);
+      // Ease out cubic
+      const ease = 1 - Math.pow(1 - progress, 3);
+      this.marqueeTranslateX = this.normalizeTranslate(startTranslate + delta * ease);
+
+      if (progress < 1) {
+        requestAnimationFrame(animateStep);
+      }
+    };
+    requestAnimationFrame(animateStep);
+  }
+
+  scheduleMarqueeResume(delay: number = 2500): void {
+    if (this.marqueeResumeTimer) clearTimeout(this.marqueeResumeTimer);
+    this.marqueeResumeTimer = setTimeout(() => {
+      this.isMarqueeHovered = false;
+      this.isMarqueeDragging = false;
+    }, delay);
+  }
+
 }
